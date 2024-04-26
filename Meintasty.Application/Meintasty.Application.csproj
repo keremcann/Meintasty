@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Meintasty.Domain\Meintasty.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Restaurant\Queries\" />
-  </ItemGroup>
-
 </Project>
