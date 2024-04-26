@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Meintasty.Application.Contract\Meintasty.Application.Contract.csproj" />
+    <ProjectReference Include="..\Meintasty.Application\Meintasty.Application.csproj" />
+    <ProjectReference Include="..\Meintasty.Data\Meintasty.Data.csproj" />
+    <ProjectReference Include="..\Meintasty.Domain\Meintasty.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
