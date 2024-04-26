@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Meintasty.Application.Contract.Login.Queries;
+using Meintasty.Core.Common;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 
@@ -8,7 +9,7 @@ namespace Meintasty.Application.Login
     /// <summary>
     /// 
     /// </summary>
-    public class GetLoginQueryHandler : IRequestHandler<GetLoginQueryRequest, GetLoginQueryResponse>
+    public class GetLoginQueryHandler : IRequestHandler<GetLoginQueryRequest, GeneralResponse<GetLoginQueryResponse>>
     {
         private readonly IUserRepositoryAsync _userRepository;
 
@@ -20,9 +21,9 @@ namespace Meintasty.Application.Login
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GetLoginQueryResponse> Handle(GetLoginQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<GetLoginQueryResponse>> Handle(GetLoginQueryRequest request, CancellationToken cancellationToken)
         {
-            var response = new GetLoginQueryResponse();
+            var response = new GeneralResponse<GetLoginQueryResponse>();
 
             var user = _userRepository.GetAsync(new User 
             { 
@@ -45,8 +46,8 @@ namespace Meintasty.Application.Login
 
             response.Success = true;
             response.InfoMessage = "Başarılı";
-            response.FullName = user.Result.Value.FullName;
-            response.Token = Guid.NewGuid().ToString();
+            response.Value.FullName = user.Result.Value.FullName;
+            response.Value.Token = Guid.NewGuid().ToString();
 
             return await Task.FromResult(response);
         }

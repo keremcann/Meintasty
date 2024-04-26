@@ -6,6 +6,7 @@ namespace Meintasty.Domain.Entity
     public class City : IEntity
     {
         public int Id { get; set; }
+        public int CantonId { get; set; }
         public string? CityName { get; set; }
         public int CityCode { get; set; }
         public int CreateUser { get; set; }

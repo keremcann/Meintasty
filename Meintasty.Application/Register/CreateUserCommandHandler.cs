@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Meintasty.Application.Contract.Register.Commands;
+using Meintasty.Core.Common;
 
 namespace Meintasty.Application.Register
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, GeneralResponse<CreateUserCommandResponse>>
     {
         /// <summary>
         /// 
@@ -19,9 +20,9 @@ namespace Meintasty.Application.Register
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var response = new CreateUserCommandResponse();
+            var response = new GeneralResponse<CreateUserCommandResponse>();
 
             return await Task.FromResult(response);
         }

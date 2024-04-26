@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Meintasty.Application.Contract.Register.Commands;
+using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Core.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ namespace Meintasty.ApiHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class CantonController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -16,7 +16,7 @@ namespace Meintasty.ApiHost.Controllers
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        public RegisterController(IMediator mediator) => _mediator = mediator;
+        public CantonController(IMediator mediator) => _mediator = mediator;
 
         /// <summary>
         /// 
@@ -24,10 +24,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] CreateUserCommandRequest request)
+        [HttpPost("getCantonsAndCities")]
+        public async Task<IActionResult> GetCantonsAndCities([FromBody] GetCantonQueryRequest request)
         {
-            GeneralResponse<CreateUserCommandResponse> response = await _mediator.Send(request);
+            GeneralResponse<List<GetCantonQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);
         }
     }

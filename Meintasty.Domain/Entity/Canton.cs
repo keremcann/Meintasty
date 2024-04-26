@@ -14,5 +14,6 @@ namespace Meintasty.Domain.Entity
         public int? DeleteUser { get; set; }
         public DateTime? DeleteDate { get; set; }
         public bool IsActive { get; set; }
+        public List<City>? Cities { get; set; }
     }
 }

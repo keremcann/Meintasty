@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Meintasty.Application.Contract\Meintasty.Application.Contract.csproj" />
     <ProjectReference Include="..\Meintasty.Domain\Meintasty.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Restaurant\Queries\" />
   </ItemGroup>
 
 </Project>
