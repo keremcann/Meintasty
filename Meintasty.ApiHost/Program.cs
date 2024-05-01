@@ -21,6 +21,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetLo
 builder.Services.AddScoped<IUserRepositoryAsync, UserRepositoryAsync>();
 builder.Services.AddScoped<ICantonRepositoryAsync, CantonRepositoryAsync>();
 builder.Services.AddScoped<ICityRepositoryAsync, CityRepositoryAsync>();
+builder.Services.AddScoped<IRestaurantRepositoryAsync, RestaurantRepositoryAsync>();
 
 #endregion
 

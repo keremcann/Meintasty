@@ -24,6 +24,7 @@ namespace Meintasty.Application.Login
         public async Task<GeneralResponse<GetLoginQueryResponse>> Handle(GetLoginQueryRequest request, CancellationToken cancellationToken)
         {
             var response = new GeneralResponse<GetLoginQueryResponse>();
+            response.Value = new GetLoginQueryResponse();
 
             var user = _userRepository.GetAsync(new User 
             { 
