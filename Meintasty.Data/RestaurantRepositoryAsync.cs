@@ -55,7 +55,7 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdAsync(int id)
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByIdAsync(int id)
         {
             var data = new GeneralResponse<List<Restaurant>>();
             data.Value = new List<Restaurant>();

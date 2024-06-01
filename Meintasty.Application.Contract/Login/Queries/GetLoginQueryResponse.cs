@@ -7,5 +7,6 @@ namespace Meintasty.Application.Contract.Login.Queries
     {
         public string? Token { get; set; }
         public string? FullName { get; set; }
+        public List<string> RoleList { get; set; }
     }
 }

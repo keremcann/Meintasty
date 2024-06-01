@@ -23,7 +23,7 @@ namespace Meintasty.ApiHost.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Member")]
         [HttpPost("getCantonsAndCities")]
         public async Task<IActionResult> GetCantonsAndCities([FromBody] GetCantonQueryRequest request)
         {

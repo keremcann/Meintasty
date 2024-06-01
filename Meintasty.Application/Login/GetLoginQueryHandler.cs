@@ -12,8 +12,13 @@ namespace Meintasty.Application.Login
     public class GetLoginQueryHandler : IRequestHandler<GetLoginQueryRequest, GeneralResponse<GetLoginQueryResponse>>
     {
         private readonly IUserRepositoryAsync _userRepository;
+        private readonly IRoleRepositoryAsync _roleRepository;
 
-        public GetLoginQueryHandler(IUserRepositoryAsync userRepository) => _userRepository = userRepository;
+        public GetLoginQueryHandler(IUserRepositoryAsync userRepository, IRoleRepositoryAsync roleRepository)
+        {
+            _userRepository = userRepository;
+            _roleRepository = roleRepository;
+        }
 
         /// <summary>
         /// 
@@ -26,29 +31,42 @@ namespace Meintasty.Application.Login
             var response = new GeneralResponse<GetLoginQueryResponse>();
             response.Value = new GetLoginQueryResponse();
 
-            var user = _userRepository.GetAsync(new User 
+            var user = await _userRepository.GetAsync(new User 
             { 
                 Email = request.Email, 
                 Password = request.Password 
             });
 
-            if (!user.Result.Success)
+            if (!user.Success)
             {
-                response.Success = user.Result.Success;
-                response.ErrorMessage = user.Result.ErrorMessage;
+                response.Success = user.Success;
+                response.ErrorMessage = user.ErrorMessage;
                 return await Task.FromResult(response);
             }
-            if (user.Result.Value == null)
+            if (user.Value == null)
             {
                 response.Success = false;
                 response.ErrorMessage = "Kullanıcı bulunamadı!";
                 return await Task.FromResult(response);
             }
 
+            var roles = await _roleRepository.GetAllByIdAsync(user.Value.Id);
+            if (!roles.Success)
+            {
+                response.Success = roles.Success;
+                response.ErrorMessage = roles.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+            if (roles.Value.Count > 0)
+            {
+                response.Value.RoleList = new List<string>();
+                foreach (var role in roles.Value)
+                    response.Value.RoleList.Add(role.RoleName);
+            }
+
             response.Success = true;
             response.InfoMessage = "Başarılı";
-            response.Value.FullName = user.Result.Value.FullName;
-            response.Value.Token = Guid.NewGuid().ToString();
+            response.Value.FullName = user.Value.FullName;
 
             return await Task.FromResult(response);
         }

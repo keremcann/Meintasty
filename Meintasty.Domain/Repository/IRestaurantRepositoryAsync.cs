@@ -6,6 +6,6 @@ namespace Meintasty.Domain.Repository
 {
     public interface IRestaurantRepositoryAsync : IRepositoryAsync<Restaurant>
     {
-        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdAsync(int id);
+        Task<GeneralResponse<List<Restaurant>>> GetAllByIdAsync(int id);
     }
 }

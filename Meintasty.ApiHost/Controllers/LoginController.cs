@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Meintasty.ApiHost.Helpers;
 using Meintasty.Application.Contract.Login.Queries;
 using Meintasty.Core.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,11 @@ namespace Meintasty.ApiHost.Controllers
         public async Task<IActionResult> GenerateToken([FromBody] GetLoginQueryRequest request)
         {
             GeneralResponse<GetLoginQueryResponse> response = await _mediator.Send(request);
+            if (response.Success) 
+            {
+                string token =  MeinTastyHelper.GenerateToken(request, response.Value.RoleList);
+                response.Value.Token = token;
+            }
             return Ok(response);
         }
     }
