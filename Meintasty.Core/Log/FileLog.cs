@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Meintasty.Core.Configuration;
 using Meintasty.Domain.Shared.Constants;
 using Meintasty.Domain.Shared.Enums;
 
@@ -14,7 +15,7 @@ namespace Meintasty.Core.Log
         /// </summary>
         public FileLog()
         {
-            string path = "";// Directory.GetCurrentDirectory() + AppSettings.GetLogFilePath();
+            string path = Directory.GetCurrentDirectory() + AppSettings.GetLogFilePath();
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
