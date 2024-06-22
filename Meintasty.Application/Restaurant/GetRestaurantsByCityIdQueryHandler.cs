@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Restaurant.Queries;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
@@ -32,6 +33,25 @@ namespace Meintasty.Application.Restaurant
         {
             var response = new GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>();
             response.Value = new List<GetRestaurantsByCityIdQueryResponse>();
+
+            var restaurants = _restaurantRepository.GetAllByIdAsync(request.CityCode);
+
+            if (!restaurants.Result.Success)
+            {
+                response.Success = restaurants.Result.Success;
+                response.ErrorMessage = restaurants.Result.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+            if (restaurants.Result.Value == null)
+            {
+                response.Success = false;
+                response.ErrorMessage = "Not found any Restaurant!";
+                return await Task.FromResult(response);
+            }
+
+            response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Result.Value);
+            response.Success = true;
+            response.InfoMessage = "Success";
 
             return await Task.FromResult(response);
         }
