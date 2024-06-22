@@ -1,12 +1,16 @@
 ﻿using Meintasty.Core.Common;
+using System.Runtime.Serialization;
 
 namespace Meintasty.Application.Contract.Login.Queries
 {
-    [Serializable]
+    [DataContract]
     public class GetLoginQueryResponse
     {
+        [DataMember]
         public string? Token { get; set; }
+        [DataMember]
         public string? FullName { get; set; }
+        [DataMember]
         public List<string> RoleList { get; set; }
     }
 }

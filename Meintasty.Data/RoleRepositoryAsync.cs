@@ -14,6 +14,11 @@ namespace Meintasty.Data
             throw new NotImplementedException();
         }
 
+        public Task<GeneralResponse<bool>> AddUserRole(int userId, int roleId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<GeneralResponse<Role>> DeleteAsync(Role request)
         {
             throw new NotImplementedException();

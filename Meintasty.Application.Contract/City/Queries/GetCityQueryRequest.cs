@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Meintasty.Core.Common;
+using System.Runtime.Serialization;
 
 namespace Meintasty.Application.Contract.City.Queries
 {
-    [Serializable]
+    [DataContract]
     public class GetCityQueryRequest : IRequest<GeneralResponse<List<GetCityQueryResponse>>>
     {
     }

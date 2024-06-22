@@ -12,5 +12,13 @@ namespace Meintasty.Domain.Repository
         /// <param name="id"></param>
         /// <returns></returns>
         Task<GeneralResponse<List<Role>>> GetAllByIdAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Boolean>> AddUserRole(int userId, int roleId);
     }
 }

@@ -26,7 +26,8 @@ namespace Meintasty.ApiHost.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Authorize(Roles = "Admin,Member")]
+        //[Authorize(Roles = "Admin,Member")]
+        [AllowAnonymous]
         [HttpPost("getRestaurantsByCityId")]
         public async Task<IActionResult> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
         {
