@@ -85,9 +85,39 @@ namespace Meintasty.Data
             }
         }
 
-        public Task<GeneralResponse<Restaurant>> GetAsync(Restaurant request)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<Restaurant>> GetAsync(Restaurant request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<Restaurant>();
+            data.Value = new Restaurant();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@RestaurantId", request.Id);
+
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_RestaurantById", parameters, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
 
         public Task<GeneralResponse<Restaurant>> UpdateAsync(Restaurant request)

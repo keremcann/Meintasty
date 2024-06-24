@@ -2,6 +2,7 @@
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Register.Commands;
+using Meintasty.Application.Contract.Restaurant;
 using Meintasty.Application.Contract.Restaurant.Queries;
 using Meintasty.Domain.Entity;
 
@@ -23,8 +24,24 @@ namespace Meintasty.Application
             CreateMap<GetCityQueryResponse, City>().ReverseMap();
             #endregion
 
-            #region Restaurant
+            #region Restaurant By City
             CreateMap<GetRestaurantsByCityIdQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
+            #endregion
+
+            #region Restaurant By Id
+            CreateMap<GetRestaurantDetailByIdQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
+            #endregion
+
+            #region Restaurant Address
+            CreateMap<RestaurantAddressContract, RestaurantAddress>().ReverseMap();
+            #endregion
+
+            #region Restaurant Menu
+            CreateMap<RestaurantMenuContract, RestaurantMenu>().ReverseMap();
+            #endregion
+
+            #region Restaurant Order
+            CreateMap<RestaurantOrderContract, RestaurantOrder>().ReverseMap();
             #endregion
         }
     }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Restaurant.Queries;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
