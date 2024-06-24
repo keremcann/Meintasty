@@ -30,7 +30,7 @@ namespace Meintasty.Application.Register
             var response = new GeneralResponse<CreateUserCommandResponse>();
             response.Value = new CreateUserCommandResponse();
 
-            if (string.IsNullOrEmpty(request.FullName) || string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.PhoneNumber) || string.IsNullOrEmpty(request.Password) || string.IsNullOrEmpty(request.RePassword))
+            if (string.IsNullOrEmpty(request.FullName) || string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
             {
                 response.Success = false;
                 response.ErrorMessage = "Please check input for not null!";
@@ -43,14 +43,14 @@ namespace Meintasty.Application.Register
                 response.ErrorMessage = "Please check email format!";
                 return await Task.FromResult(response);
             }
-
+            /*
             if (!request.Password.Equals(request.RePassword))
             {
                 response.Success = false;
                 response.ErrorMessage = "Password does not match!";
                 return await Task.FromResult(response);
             }
-
+            */
             var user = await _userRepository.AddAsync(new User
             {
                 FullName = request.FullName,
