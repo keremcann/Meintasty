@@ -13,7 +13,7 @@ namespace Meintasty.Application
         public ApplicationAutoMapper()
         {
             #region User
-            CreateMap<CreateUserCommandRequest, User>().ReverseMap();
+            IMappingExpression<Domain.Entity.User, CreateUserCommandRequest> mappingExpression = CreateMap<CreateUserCommandRequest, Meintasty.Domain.Entity.User>().ReverseMap();
             #endregion
 
             #region Canton

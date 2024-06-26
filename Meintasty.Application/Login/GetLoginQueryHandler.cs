@@ -31,7 +31,7 @@ namespace Meintasty.Application.Login
             var response = new GeneralResponse<GetLoginQueryResponse>();
             response.Value = new GetLoginQueryResponse();
 
-            var user = await _userRepository.GetAsync(new User 
+            var user = await _userRepository.GetAsync(new Domain.Entity.User
             { 
                 Email = request.Email, 
                 Password = request.Password 

@@ -51,7 +51,7 @@ namespace Meintasty.Application.Register
                 return await Task.FromResult(response);
             }
             */
-            var user = await _userRepository.AddAsync(new User
+            var user = await _userRepository.AddAsync(new Domain.Entity.User
             {
                 FullName = request.FullName,
                 Email = request.Email,
