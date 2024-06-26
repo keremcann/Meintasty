@@ -84,6 +84,7 @@ builder.Services.AddScoped<IUserRepositoryAsync, UserRepositoryAsync>();
 builder.Services.AddScoped<IRoleRepositoryAsync, RoleRepositoryAsync>();
 builder.Services.AddScoped<ICantonRepositoryAsync, CantonRepositoryAsync>();
 builder.Services.AddScoped<ICityRepositoryAsync, CityRepositoryAsync>();
+builder.Services.AddScoped<IBasketRepositoryAsync, BasketRepositoryAsync>();
 builder.Services.AddScoped<IOrderRepositoryAsync, OrderRepositoryAsync>();
 builder.Services.AddScoped<IRestaurantRepositoryAsync, RestaurantRepositoryAsync>();
 builder.Services.AddScoped<IRestaurantAddressRepositoryAsync, RestaurantAddressRepositoryAsync>();

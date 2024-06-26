@@ -8,17 +8,17 @@ using System.Data;
 
 namespace Meintasty.Data
 {
-    public class OrderRepositoryAsync : MeintastyDbConnection, IOrderRepositoryAsync
+    public class BasketRepositoryAsync : MeintastyDbConnection, IBasketRepositoryAsync
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<Order>> AddAsync(Order request)
+        public async Task<GeneralResponse<Basket>> AddAsync(Basket request)
         {
-            var data = new GeneralResponse<Order>();
-            data.Value = new Order();
+            var data = new GeneralResponse<Basket>();
+            data.Value = new Basket();
 
             if (!connection.Success)
             {
@@ -29,7 +29,7 @@ namespace Meintasty.Data
 
             try
             {
-                var order = connection?.db?.QueryAsync<Int32>("ins_NewOrder", new
+                var basket = connection?.db?.QueryAsync<Int32>("ins_NewBasket", new
                 {
                     request.CreateUser,
                     request.CreateDate,
@@ -37,7 +37,7 @@ namespace Meintasty.Data
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
 
                 data.Success = true;
-                data.InfoMessage = "Sipariş oluşturuldu!";
+                data.InfoMessage = "Sepete eklendi!";
 
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -58,10 +58,10 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<Order>> DeleteAsync(Order request)
+        public async Task<GeneralResponse<Basket>> DeleteAsync(Basket request)
         {
-            var data = new GeneralResponse<Order>();
-            data.Value = new Order();
+            var data = new GeneralResponse<Basket>();
+            data.Value = new Basket();
 
             if (!connection.Success)
             {
@@ -72,7 +72,7 @@ namespace Meintasty.Data
 
             try
             {
-                var order = connection?.db?.QueryAsync<Int32>("del_OrderById", new
+                var basket = connection?.db?.QueryAsync<Int32>("del_BasketById", new
                 {
                     request.Id,
                     request.DeleteUser,
@@ -81,7 +81,7 @@ namespace Meintasty.Data
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
 
                 data.Success = true;
-                data.InfoMessage = "Sipariş silindi!";
+                data.InfoMessage = "Sepetten silindi!";
 
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -101,10 +101,10 @@ namespace Meintasty.Data
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Order>>> GetAllAsync()
+        public async Task<GeneralResponse<List<Basket>>> GetAllAsync()
         {
-            var data = new GeneralResponse<List<Order>>();
-            data.Value = new List<Order>();
+            var data = new GeneralResponse<List<Basket>>();
+            data.Value = new List<Basket>();
             if (!connection.Success)
             {
                 data.Success = false;
@@ -114,7 +114,7 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Order>("sel_AllOrders", commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Value = connection?.db?.QueryAsync<Basket>("sel_AllBaskets", commandType: CommandType.StoredProcedure).Result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -131,12 +131,12 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request)
+        public async Task<GeneralResponse<List<Basket>>> GetAllByInfoAsync(Basket request)
         {
-            var data = new GeneralResponse<List<Order>>();
-            data.Value = new List<Order>();
+            var data = new GeneralResponse<List<Basket>>();
+            data.Value = new List<Basket>();
             if (!connection.Success)
             {
                 data.Success = false;
@@ -147,14 +147,14 @@ namespace Meintasty.Data
             string spName = string.Empty;
             var parameters = new DynamicParameters();
 
-            if (request.UserId != default(int) && request.UserId > 0) 
+            if (request.UserId != default(int) && request.UserId > 0)
             {
-                spName = "sel_OrdersByUserId";
+                spName = "sel_BasketsByUserId";
                 parameters.Add("@UserId", request.UserId);
             }
             else if (request.RestaurantId != default(int) && request.RestaurantId > 0)
             {
-                spName = "sel_OrdersByRestaurantId";
+                spName = "sel_BasketsByRestaurantId";
                 parameters.Add("@RestaurantId", request.RestaurantId);
             }
             else
@@ -167,7 +167,7 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Order>(spName, parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Value = connection?.db?.QueryAsync<Basket>(spName, parameters, commandType: CommandType.StoredProcedure).Result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -186,10 +186,10 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<Order>> GetAsync(Order request)
+        public async Task<GeneralResponse<Basket>> GetAsync(Basket request)
         {
-            var data = new GeneralResponse<Order>();
-            data.Value = new Order();
+            var data = new GeneralResponse<Basket>();
+            data.Value = new Basket();
 
             if (!connection.Success)
             {
@@ -200,13 +200,13 @@ namespace Meintasty.Data
 
             try
             {
-                var order = connection?.db?.QueryAsync<Int32>("sel_OrderById", new
+                var basket = connection?.db?.QueryAsync<Int32>("sel_BasketById", new
                 {
                     request.Id
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
 
                 data.Success = true;
-                data.InfoMessage = "Sipariş güncellendi!";
+                data.InfoMessage = "Sepet item ok!";
 
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -227,10 +227,10 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<Order>> UpdateAsync(Order request)
+        public async Task<GeneralResponse<Basket>> UpdateAsync(Basket request)
         {
-            var data = new GeneralResponse<Order>();
-            data.Value = new Order();
+            var data = new GeneralResponse<Basket>();
+            data.Value = new Basket();
 
             if (!connection.Success)
             {
@@ -241,15 +241,14 @@ namespace Meintasty.Data
 
             try
             {
-                var order = connection?.db?.QueryAsync<Int32>("upd_Order", new
+                var basket = connection?.db?.QueryAsync<Int32>("upd_Basket", new
                 {
-                    request.Id,
                     request.UpdateUser,
                     request.UpdateDate
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
 
                 data.Success = true;
-                data.InfoMessage = "Sipariş güncellendi!";
+                data.InfoMessage = "Sepet güncellendi!";
 
                 connection?.db?.Close();
                 return await Task.FromResult(data);

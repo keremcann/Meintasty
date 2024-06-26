@@ -11,6 +11,6 @@ namespace Meintasty.Domain.Repository
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order item);
+        Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request);
     }
 }
