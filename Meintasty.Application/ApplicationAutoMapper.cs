@@ -4,6 +4,7 @@ using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Application.Contract.Restaurant;
 using Meintasty.Application.Contract.Restaurant.Queries;
+using Meintasty.Application.Contract.User.Queries;
 using Meintasty.Domain.Entity;
 
 namespace Meintasty.Application
@@ -13,7 +14,8 @@ namespace Meintasty.Application
         public ApplicationAutoMapper()
         {
             #region User
-            IMappingExpression<Domain.Entity.User, CreateUserCommandRequest> mappingExpression = CreateMap<CreateUserCommandRequest, Meintasty.Domain.Entity.User>().ReverseMap();
+            CreateMap<Domain.Entity.User, CreateUserCommandRequest>().ReverseMap();
+            CreateMap<Domain.Entity.User, GetUserQueryResponse>().ReverseMap();
             #endregion
 
             #region Canton
