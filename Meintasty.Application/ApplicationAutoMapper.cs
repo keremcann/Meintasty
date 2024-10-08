@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Meintasty.Application.Contract.Address;
 using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.City.Queries;
@@ -58,6 +59,10 @@ namespace Meintasty.Application
 
             #region Home Restaurant Menu
             CreateMap<GetFavoriteMenuQueryResponse, RestaurantMenu>().ReverseMap();
+            #endregion
+
+            #region User Address
+            CreateMap<GetUserAddressResponse, UserAddress>().ReverseMap();
             #endregion
         }
     }

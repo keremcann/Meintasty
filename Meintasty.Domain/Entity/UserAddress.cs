@@ -3,18 +3,18 @@
 namespace Meintasty.Domain.Entity
 {
     [Serializable]
-    public class User : IEntity
+    public class UserAddress : IEntity
     {
         public int Id { get; set; }
-        public string? FullName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? Gender { get; set; }
-        public string? BirthDate { get; set; }
-        public bool? IsEmailVerified { get; set; }
-        public bool? IsPhoneVerified { get; set; }
-        public byte[]? ProfilePicture { get; set; }
-        public string? Password { get; set; }
+        public int UserId { get; set; }
+        public string? AddressName { get; set; }
+        public string? AddressText { get; set; }
+        public string? Street { get; set; }
+        public int CityCode { get; set; }
+        public string? CityName { get; set; }
+        public string? CantonName { get; set; }
+        public string? ZipCode { get; set; }
+        public bool IsDefault { get; set; }
         public int CreateUser { get; set; }
         public DateTime CreateDate { get; set; }
         public int? UpdateUser { get; set; }
