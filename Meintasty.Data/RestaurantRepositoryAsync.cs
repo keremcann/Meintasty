@@ -120,6 +120,37 @@ namespace Meintasty.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<GeneralResponse<List<Restaurant>>> GetFavoritesAsync()
+        {
+            var data = new GeneralResponse<List<Restaurant>>();
+            data.Value = new List<Restaurant>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_FavotireRestaurants", CommandType.StoredProcedure).Result.ToList();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
         public Task<GeneralResponse<Restaurant>> UpdateAsync(Restaurant request)
         {
             throw new NotImplementedException();

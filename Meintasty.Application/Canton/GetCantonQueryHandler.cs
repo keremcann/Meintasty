@@ -33,6 +33,7 @@ namespace Meintasty.Application.Canton
         public async Task<GeneralResponse<List<GetCantonQueryResponse>>> Handle(GetCantonQueryRequest request, CancellationToken cancellationToken)
         {
             var response = new GeneralResponse<List<GetCantonQueryResponse>>();
+            response.Value = new List<GetCantonQueryResponse>();
 
             var cantons = _cantonRepository.GetAllAsync();
             

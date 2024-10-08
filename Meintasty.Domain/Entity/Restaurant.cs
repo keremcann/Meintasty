@@ -15,6 +15,8 @@ namespace Meintasty.Domain.Entity
         public string? WorkDayTo { get; set; }
         public string? WorkHourFrom { get; set; }
         public string? WorkHourTo { get; set; }
+        public byte[]? RestaurantImage { get; set; }
+        public string? Description { get; set; }
         public int CreateUser { get; set; }
         public DateTime CreateDate { get; set; }
         public int? UpdateUser { get; set; }

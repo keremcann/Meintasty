@@ -76,11 +76,43 @@ namespace Meintasty.Data
             }
 
             var parameters = new DynamicParameters();
-            parameters.Add("@RestaurantId", request.RestaurantId);
+            parameters.Add("@MenuId", request.RestaurantId);
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<RestaurantMenu>("sel_MenuByRestaurantId", parameters, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                data.Value = connection?.db?.QueryAsync<RestaurantMenu>("sel_MenuById", parameters, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<GeneralResponse<List<RestaurantMenu>>> GetFavoritesAsync()
+        {
+            var data = new GeneralResponse<List<RestaurantMenu>>();
+            data.Value = new List<RestaurantMenu>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<RestaurantMenu>("sel_FavoriteMenus", commandType: CommandType.StoredProcedure).Result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
