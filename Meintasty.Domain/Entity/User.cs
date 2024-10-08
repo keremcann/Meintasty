@@ -9,6 +9,7 @@ namespace Meintasty.Domain.Entity
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
+        public byte[]? ProfilePicture { get; set; }
         public string? Password { get; set; }
         public int CreateUser { get; set; }
         public DateTime CreateDate { get; set; }
