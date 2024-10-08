@@ -32,6 +32,24 @@ namespace Meintasty.Application.Basket
             var response = new GeneralResponse<DeleteBasketCommandResponse>();
             response.Value = new DeleteBasketCommandResponse();
 
+            var basket = await _basketRepository.DeleteAsync(new Domain.Entity.Basket 
+            { 
+                Id = request.BasketId,
+                DeleteUser = 1,
+                DeleteDate = DateTime.UtcNow,
+                IsActive = false,
+            });
+
+            if (!basket.Success)
+            {
+                response.Success = basket.Success;
+                response.ErrorMessage = basket.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Başarılı";
+
             return await Task.FromResult(response);
         }
     }

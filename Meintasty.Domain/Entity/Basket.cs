@@ -9,7 +9,9 @@ namespace Meintasty.Domain.Entity
         public int UserId { get; set; }
         public int RestaurantId { get; set; }
         public int MenuId { get; set; }
-        public DateTime BaketDate { get; set; }
+        public string? RestaurantName { get; set; }
+        public string? MenuName { get; set; }
+        public DateTime BasketDate { get; set; }
         public int Quantity { get; set; }
         public string? Price { get; set; }
         public string? CurrencyCode { get; set; }        

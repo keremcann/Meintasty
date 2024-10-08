@@ -31,6 +31,13 @@ namespace Meintasty.Data
             {
                 var basket = connection?.db?.QueryAsync<Int32>("ins_NewBasket", new
                 {
+                    request.UserId,
+                    request.RestaurantId,
+                    request.MenuId,
+                    request.BasketDate,
+                    request.Quantity,
+                    request.Price,
+                    request.CurrencyCode,
                     request.CreateUser,
                     request.CreateDate,
                     request.IsActive

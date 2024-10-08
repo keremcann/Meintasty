@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Register.Commands;
@@ -44,6 +45,10 @@ namespace Meintasty.Application
 
             #region Restaurant Order
             CreateMap<RestaurantOrderContract, RestaurantOrder>().ReverseMap();
+            #endregion
+
+            #region Basket
+            CreateMap<GetBasketQueryResponse, Domain.Entity.Basket>().ReverseMap();
             #endregion
         }
     }

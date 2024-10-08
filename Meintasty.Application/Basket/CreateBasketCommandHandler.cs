@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Meintasty.Application.Contract.Basket.Commands;
-using Meintasty.Application.Contract.User.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
 
@@ -32,6 +31,30 @@ namespace Meintasty.Application.Basket
         {
             var response = new GeneralResponse<CreateBasketCommandResponse>();
             response.Value = new CreateBasketCommandResponse();
+
+            var basket = await _basketRepository.AddAsync(new Domain.Entity.Basket
+            {
+                UserId = request.UserId,
+                RestaurantId = request.RestaurantId,
+                MenuId = request.MenuId,
+                Quantity = request.Quantity,
+                Price = request.Price,
+                CurrencyCode = request.CurrencyCode ?? "EUR",
+                BasketDate = DateTime.UtcNow,
+                CreateDate = DateTime.UtcNow,
+                CreateUser = 1,
+                IsActive = true,
+            });
+
+            if (!basket.Success)
+            {
+                response.Success = basket.Success;
+                response.ErrorMessage = basket.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Başarılı";
 
             return await Task.FromResult(response);
         }
