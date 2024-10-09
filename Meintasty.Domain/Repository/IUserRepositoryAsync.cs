@@ -12,5 +12,26 @@ namespace Meintasty.Domain.Repository
         /// <param name="id"></param>
         /// <returns></returns>
         Task<GeneralResponse<User>> GetByIdAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Boolean>> UpdateUserPasswordAsync(User request);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Boolean>> UpdateUserEmailAsync(User request);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Boolean>> UpdateUserPhoneAsync(User request);
     }
 }

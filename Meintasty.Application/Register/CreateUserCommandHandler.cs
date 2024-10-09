@@ -71,7 +71,7 @@ namespace Meintasty.Application.Register
 
             response.Success = true;
             response.InfoMessage = "Başarılı";
-            response.Value.FullName = user.Value.FullName;
+            response.Value.FullName = user?.Value?.FullName ?? string.Empty;
 
             return await Task.FromResult(response);
         }

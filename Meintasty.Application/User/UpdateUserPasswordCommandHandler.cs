@@ -5,7 +5,7 @@ using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.User
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommandRequest, GeneralResponse<UpdateUserCommandResponse>>
+    public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommandRequest, GeneralResponse<UpdateUserPasswordCommandResponse>>
     {
         /// <summary>
         /// 
@@ -15,7 +15,8 @@ namespace Meintasty.Application.User
         /// <summary>
         /// 
         /// </summary>
-        public UpdateUserCommandHandler(IUserRepositoryAsync userRepository)
+        /// <param name="userRepository"></param>
+        public UpdateUserPasswordCommandHandler(IUserRepositoryAsync userRepository)
         {
             _userRepository = userRepository;
         }
@@ -26,23 +27,15 @@ namespace Meintasty.Application.User
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<UpdateUserCommandResponse>> Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<UpdateUserPasswordCommandResponse>> Handle(UpdateUserPasswordCommandRequest request, CancellationToken cancellationToken)
         {
-            var response = new GeneralResponse<UpdateUserCommandResponse>();
-            response.Value = new UpdateUserCommandResponse();
+            var response = new GeneralResponse<UpdateUserPasswordCommandResponse>();
+            response.Value = new UpdateUserPasswordCommandResponse();
 
-            var result = await _userRepository.UpdateAsync(new Domain.Entity.User
+            var result = await _userRepository.UpdateUserPasswordAsync(new Domain.Entity.User
             {
                 Id = request.UserId,
-                FullName = request.FullName,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                Gender = request.Gender,
-                BirthDate = request.BirthDate,
                 Password = request.Password,
-                IsEmailVerified = request.IsEmailVerified,
-                IsPhoneVerified = request.IsPhoneVerified,
-                ProfilePicture = request.ProfilePicture,
                 UpdateUser = 1,
                 UpdateDate = DateTime.UtcNow
             });

@@ -26,10 +26,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("getUser")]
-        public async Task<IActionResult> GetUser([FromBody] GetUserQueryRequest request)
+        public async Task<GeneralResponse<GetUserQueryResponse>> GetUser([FromBody] GetUserQueryRequest request)
         {
             GeneralResponse<GetUserQueryResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -39,10 +39,49 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("updateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommandRequest request)
+        public async Task<GeneralResponse<UpdateUserCommandResponse>> UpdateUser([FromBody] UpdateUserCommandRequest request)
         {
             GeneralResponse<UpdateUserCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,Member")]
+        [HttpPost("updateUserEmail")]
+        public async Task<GeneralResponse<UpdateUserEmailCommandResponse>> UpdateUserEmail([FromBody] UpdateUserEmailCommandRequest request)
+        {
+            GeneralResponse<UpdateUserEmailCommandResponse> response = await _mediator.Send(request);
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,Member")]
+        [HttpPost("updateUserPassword")]
+        public async Task<GeneralResponse<UpdateUserPasswordCommandResponse>> UpdateUserPassword([FromBody] UpdateUserPasswordCommandRequest request)
+        {
+            GeneralResponse<UpdateUserPasswordCommandResponse> response = await _mediator.Send(request);
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,Member")]
+        [HttpPost("updateUserPhone")]
+        public async Task<GeneralResponse<UpdateUserPhoneCommandResponse>> UpdateUserPhone([FromBody] UpdateUserPhoneCommandRequest request)
+        {
+            GeneralResponse<UpdateUserPhoneCommandResponse> response = await _mediator.Send(request);
+            return response;
         }
 
         /// <summary>
@@ -52,10 +91,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("removeUser")]
-        public async Task<IActionResult> RemoveUser([FromBody] DeleteUserCommandRequest request)
+        public async Task<GeneralResponse<DeleteUserCommandResponse>> RemoveUser([FromBody] DeleteUserCommandRequest request)
         {
             GeneralResponse<DeleteUserCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }

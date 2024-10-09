@@ -70,9 +70,40 @@ namespace Meintasty.Data
         /// <param name="request"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<GeneralResponse<User>> DeleteAsync(User request)
+        public async Task<GeneralResponse<User>> DeleteAsync(User request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<User>();
+            data.Value = new User();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", request.Id);
+
+            try
+            {
+                var user = connection?.db?.QueryAsync<Int32>("del_User", parameters, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Operation finished successfully!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
 
         /// <summary>
@@ -188,9 +219,175 @@ namespace Meintasty.Data
         /// <param name="request"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<GeneralResponse<User>> UpdateAsync(User request)
+        public async Task<GeneralResponse<User>> UpdateAsync(User request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<User>();
+            data.Value = new User();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var user = connection?.db?.QueryAsync<Int32>("upd_UserInfo", new
+                {
+                    request.Id,
+                    request.FullName,
+                    request.Email,
+                    request.PhoneNumber,
+                    request.Gender,
+                    request.UpdateUser,
+                    request.UpdateDate,
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Operation finished successfully!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<bool>> UpdateUserEmailAsync(User request)
+        {
+            var data = new GeneralResponse<Boolean>();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var user = connection?.db?.QueryAsync<Int32>("upd_UserEmail", new
+                {
+                    request.Id,
+                    request.Email,
+                    request.UpdateUser,
+                    request.UpdateDate,
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Operation finished successfully!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<bool>> UpdateUserPhoneAsync(User request)
+        {
+            var data = new GeneralResponse<Boolean>();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var user = connection?.db?.QueryAsync<Int32>("upd_UserPhoneNumber", new
+                {
+                    request.Id,
+                    request.PhoneNumber,
+                    request.UpdateUser,
+                    request.UpdateDate,
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Operation finished successfully!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<bool>> UpdateUserPasswordAsync(User request)
+        {
+            var data = new GeneralResponse<Boolean>();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var user = connection?.db?.QueryAsync<Int32>("upd_UserPassword", new
+                {
+                    request.Id,
+                    request.Password,
+                    request.UpdateUser,
+                    request.UpdateDate,
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Operation finished successfully!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
     }
 }
