@@ -25,10 +25,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("getFavoriteRestaurants")]
-        public async Task<IActionResult> GetFavoriteRestaurants([FromBody] GetFavoriteRestaurantQueryRequest request)
+        public async Task<GeneralResponse<List<GetFavoriteRestaurantQueryResponse>>> GetFavoriteRestaurants([FromBody] GetFavoriteRestaurantQueryRequest request)
         {
             GeneralResponse<List<GetFavoriteRestaurantQueryResponse>> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("getFavoriteMenus")]
-        public async Task<IActionResult> GetFavoriteMenus([FromBody] GetFavoriteMenuQueryRequest request)
+        public async Task<GeneralResponse<List<GetFavoriteMenuQueryResponse>>> GetFavoriteMenus([FromBody] GetFavoriteMenuQueryRequest request)
         {
             GeneralResponse<List<GetFavoriteMenuQueryResponse>> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }

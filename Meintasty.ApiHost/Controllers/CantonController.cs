@@ -26,7 +26,20 @@ namespace Meintasty.ApiHost.Controllers
         //[Authorize(Roles = "Admin,Member")]
         [AllowAnonymous]
         [HttpPost("getCantonsAndCities")]
-        public async Task<IActionResult> GetCantonsAndCities([FromBody] GetCantonQueryRequest request)
+        public async Task<GeneralResponse<List<GetCantonQueryResponse>>> GetCantonsAndCities([FromBody] GetCantonQueryRequest request)
+        {
+            GeneralResponse<List<GetCantonQueryResponse>> response = await _mediator.Send(request);
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("getLocations")]
+        public async Task<IActionResult> GeLocations([FromBody] GetCantonQueryRequest request)
         {
             GeneralResponse<List<GetCantonQueryResponse>> response = await _mediator.Send(request);
             return Ok(response);

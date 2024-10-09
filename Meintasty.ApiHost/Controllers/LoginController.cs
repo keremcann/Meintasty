@@ -26,7 +26,7 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("generateToken")]
-        public async Task<IActionResult> GenerateToken([FromBody] GetLoginQueryRequest request)
+        public async Task<GeneralResponse<GetLoginQueryResponse>> GenerateToken([FromBody] GetLoginQueryRequest request)
         {
             GeneralResponse<GetLoginQueryResponse> response = await _mediator.Send(request);
             if (response.Success) 
@@ -34,7 +34,7 @@ namespace Meintasty.ApiHost.Controllers
                 string token =  MeinTastyHelper.GenerateToken(request, response.Value.RoleList);
                 response.Value.Token = token;
             }
-            return Ok(response);
+            return response;
         }
     }
 }

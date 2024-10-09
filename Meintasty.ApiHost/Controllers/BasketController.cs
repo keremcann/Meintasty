@@ -26,10 +26,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("getBaskets")]
-        public async Task<IActionResult> GetBaskets([FromBody] GetBasketQueryRequest request)
+        public async Task<GeneralResponse<List<GetBasketQueryResponse>>> GetBaskets([FromBody] GetBasketQueryRequest request)
         {
             GeneralResponse<List<GetBasketQueryResponse>> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("addBasket")]
-        public async Task<IActionResult> AddBasket([FromBody] CreateBasketCommandRequest request)
+        public async Task<GeneralResponse<CreateBasketCommandResponse>> AddBasket([FromBody] CreateBasketCommandRequest request)
         {
             GeneralResponse<CreateBasketCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("updateBasket")]
-        public async Task<IActionResult> UpdateBasket([FromBody] UpdateBasketCommandRequest request)
+        public async Task<GeneralResponse<UpdateBasketCommandResponse>> UpdateBasket([FromBody] UpdateBasketCommandRequest request)
         {
             GeneralResponse<UpdateBasketCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -65,10 +65,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("removeBasket")]
-        public async Task<IActionResult> RemoveBasket([FromBody] DeleteBasketCommandRequest request)
+        public async Task<GeneralResponse<DeleteBasketCommandResponse>> RemoveBasket([FromBody] DeleteBasketCommandRequest request)
         {
             GeneralResponse<DeleteBasketCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }

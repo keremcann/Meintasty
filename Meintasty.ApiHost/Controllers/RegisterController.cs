@@ -25,10 +25,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] CreateUserCommandRequest request)
+        public async Task<GeneralResponse<CreateUserCommandResponse>> SignUp([FromBody] CreateUserCommandRequest request)
         {
             GeneralResponse<CreateUserCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }

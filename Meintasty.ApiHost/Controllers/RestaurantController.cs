@@ -29,10 +29,10 @@ namespace Meintasty.ApiHost.Controllers
         //[Authorize(Roles = "Admin,Member")]
         [AllowAnonymous]
         [HttpPost("getRestaurantsByCityId")]
-        public async Task<IActionResult> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
+        public async Task<GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
         {
             GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("getRestaurantDetailById")]
-        public async Task<IActionResult> GetRestaurantDetailById([FromBody] GetRestaurantDetailByIdQueryRequest request)
+        public async Task<GeneralResponse<GetRestaurantDetailByIdQueryResponse>> GetRestaurantDetailById([FromBody] GetRestaurantDetailByIdQueryRequest request)
         {
             GeneralResponse<GetRestaurantDetailByIdQueryResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }

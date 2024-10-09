@@ -19,7 +19,7 @@ namespace Meintasty.ApiHost.Helpers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user?.Email),
+                new Claim(ClaimTypes.Email, user?.Email ?? "info@meintasty.com"),
                 new Claim(ClaimTypes.Name, "SystemUser")
             };
 
@@ -88,10 +88,10 @@ namespace Meintasty.ApiHost.Helpers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, jwtSub),
+                    new Claim(JwtRegisteredClaimNames.Sub, jwtSub ?? "345h098bb8reberbwr4vvb8945"),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Email, user.Email ?? "info@meintasty.com"),
                     new Claim(ClaimTypes.Name, "SystemUser")
                 };
                 foreach (var role in roles)
@@ -118,7 +118,7 @@ namespace Meintasty.ApiHost.Helpers
 
             return new SigningCredentials(
                 new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(symmetricSecurityKey)
+                    Encoding.UTF8.GetBytes(symmetricSecurityKey ?? "fvh8456477hth44j6wfds98bq9hp8bqh9ubq9gjig3qr0[94vj5")
                 ),
                 SecurityAlgorithms.HmacSha256
             );

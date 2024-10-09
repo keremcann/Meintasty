@@ -26,10 +26,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("getOrders")]
-        public async Task<IActionResult> GetOrders([FromBody] GetOrderQueryRequest request)
+        public async Task<GeneralResponse<List<GetOrderQueryResponse>>> GetOrders([FromBody] GetOrderQueryRequest request)
         {
             GeneralResponse<List<GetOrderQueryResponse>> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("addOrder")]
-        public async Task<IActionResult> AddOrder([FromBody] CreateOrderCommandRequest request)
+        public async Task<GeneralResponse<CreateOrderCommandResponse>> AddOrder([FromBody] CreateOrderCommandRequest request)
         {
             GeneralResponse<CreateOrderCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -52,10 +52,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("updateOrder")]
-        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommandRequest request)
+        public async Task<GeneralResponse<UpdateOrderCommandResponse>> UpdateOrder([FromBody] UpdateOrderCommandRequest request)
         {
             GeneralResponse<UpdateOrderCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
 
         /// <summary>
@@ -65,10 +65,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("removeOrder")]
-        public async Task<IActionResult> RemoveOrder([FromBody] DeleteOrderCommandRequest request)
+        public async Task<GeneralResponse<DeleteOrderCommandResponse>> RemoveOrder([FromBody] DeleteOrderCommandRequest request)
         {
             GeneralResponse<DeleteOrderCommandResponse> response = await _mediator.Send(request);
-            return Ok(response);
+            return response;
         }
     }
 }
