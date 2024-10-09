@@ -15,6 +15,7 @@ namespace Meintasty.Application.User
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userRepository"></param>
         public UpdateUserCommandHandler(IUserRepositoryAsync userRepository)
         {
             _userRepository = userRepository;

@@ -46,6 +46,7 @@ namespace Meintasty.Data
 
                 data.Success = true;
                 data.InfoMessage = "Kullanıcı oluşturuldu!";
+                data.Value.Id = user.Value;
                 data.Value.FullName = request.FullName;
                 data.Value.Email = request.Email;
                 data.Value.PhoneNumber = request.PhoneNumber;

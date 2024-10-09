@@ -15,6 +15,7 @@ namespace Meintasty.Application.User
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userRepository"></param>
         public DeleteUserCommandHandler(IUserRepositoryAsync userRepository)
         {
             _userRepository = userRepository;
@@ -30,6 +31,21 @@ namespace Meintasty.Application.User
         {
             var response = new GeneralResponse<DeleteUserCommandResponse>();
             response.Value = new DeleteUserCommandResponse();
+
+            var result = await _userRepository.DeleteAsync(new Domain.Entity.User
+            {
+                Id = request.UserId
+            });
+
+            if (!result.Success)
+            {
+                response.Success = result.Success;
+                response.ErrorMessage = result.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Process finised successfully!";
 
             return await Task.FromResult(response);
         }

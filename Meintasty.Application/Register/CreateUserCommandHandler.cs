@@ -2,21 +2,27 @@
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Core.Helpers;
-using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Register
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, GeneralResponse<CreateUserCommandResponse>>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IUserRepositoryAsync _userRepository;
+        private readonly IUserRoleRepositoryAsync _userRoleRepository;
 
         /// <summary>
         /// 
         /// </summary>
-        public CreateUserCommandHandler(IUserRepositoryAsync userRepository)
+        /// <param name="userRepository"></param>
+        /// <param name="userRoleRepository"></param>
+        public CreateUserCommandHandler(IUserRepositoryAsync userRepository, IUserRoleRepositoryAsync userRoleRepository)
         {
             _userRepository = userRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         /// <summary>
@@ -66,6 +72,22 @@ namespace Meintasty.Application.Register
             {
                 response.Success = user.Success;
                 response.ErrorMessage = user.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            var userRole = await _userRoleRepository.AddAsync(new Domain.Entity.UserRole
+            {
+                UserId = user.Value.Id,
+                RoleId = 2,
+                CreateUser = 1,
+                CreateDate = DateTime.UtcNow,
+                IsActive = true
+            });
+
+            if (!userRole.Success)
+            {
+                response.Success = userRole.Success;
+                response.ErrorMessage = userRole.ErrorMessage;
                 return await Task.FromResult(response);
             }
 

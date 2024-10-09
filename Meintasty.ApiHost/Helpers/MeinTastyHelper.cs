@@ -45,7 +45,7 @@ namespace Meintasty.ApiHost.Helpers
         /// <param name="user"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        internal static string GenerateToken(GetLoginQueryRequest user, List<string> roles)
+        internal static string GenerateToken(GetLoginQueryRequest user, List<string>? roles)
         {
             var expiration = DateTime.UtcNow.AddMinutes(30);
             var token = CreateJwtToken(
@@ -81,7 +81,7 @@ namespace Meintasty.ApiHost.Helpers
         /// <param name="user"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        private static List<Claim> CreateClaims(GetLoginQueryRequest user, List<string> roles)
+        private static List<Claim> CreateClaims(GetLoginQueryRequest user, List<string>? roles)
         {
             string? jwtSub = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("JwtTokenSettings")["JwtRegisteredClaimNamesSub"];
             try
@@ -94,9 +94,13 @@ namespace Meintasty.ApiHost.Helpers
                     new Claim(ClaimTypes.Email, user.Email ?? "info@meintasty.com"),
                     new Claim(ClaimTypes.Name, "SystemUser")
                 };
-                foreach (var role in roles)
+                
+                if (roles != null && roles.Count > 0 ) 
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    foreach (var role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
                 }
 
                 return claims;

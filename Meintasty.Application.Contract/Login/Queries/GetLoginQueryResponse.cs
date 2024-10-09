@@ -7,10 +7,12 @@ namespace Meintasty.Application.Contract.Login.Queries
     public class GetLoginQueryResponse
     {
         [DataMember]
+        public int UserId { get; set; }
+        [DataMember]
         public string? Token { get; set; }
         [DataMember]
         public string? FullName { get; set; }
         [DataMember]
-        public List<string> RoleList { get; set; }
+        public List<string>? RoleList { get; set; }
     }
 }

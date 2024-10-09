@@ -9,5 +9,7 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
     {
         [DataMember]
         public int CityCode { get; set; }
+        [DataMember]
+        public int CityId { get; set; }
     }
 }

@@ -50,7 +50,7 @@ builder.Services.AddSwaggerGen(option =>
 
 var validIssuer = builder.Configuration.GetValue<string>("JwtTokenSettings:ValidIssuer");
 var validAudience = builder.Configuration.GetValue<string>("JwtTokenSettings:ValidAudience");
-var symmetricSecurityKey = builder.Configuration.GetValue<string>("JwtTokenSettings:SymmetricSecurityKey");
+var symmetricSecurityKey = builder.Configuration.GetValue<string>("JwtTokenSettings:SymmetricSecurityKey") ?? "fvh8456477hth44j6wfds98bq9hp8bqh9ubq9gjig3qr0[94vj5";
 
 builder.Services.AddAuthentication(options =>
 {
@@ -91,6 +91,7 @@ builder.Services.AddScoped<IRestaurantAddressRepositoryAsync, RestaurantAddressR
 builder.Services.AddScoped<IRestaurantMenuRepositoryAsync, RestaurantMenuRepositoryAsync>();
 builder.Services.AddScoped<IRestaurantOrderRepositoryAsync, RestaurantOrderRepositoryAsync>();
 builder.Services.AddScoped<IUserAddressRepositoryAsync, UserAddressRepositoryAsync>();
+builder.Services.AddScoped<IUserRoleRepositoryAsync, UserRoleRepositoryAsync>();
 
 #endregion
 

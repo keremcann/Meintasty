@@ -61,12 +61,13 @@ namespace Meintasty.Application.Login
             {
                 response.Value.RoleList = new List<string>();
                 foreach (var role in roles.Value)
-                    response.Value.RoleList.Add(role.RoleName);
+                    response.Value.RoleList.Add(role.RoleName ?? "Member");
             }
 
             response.Success = true;
             response.InfoMessage = "Başarılı";
             response.Value.FullName = user.Value.FullName;
+            response.Value.UserId = user.Value.Id;
 
             return await Task.FromResult(response);
         }

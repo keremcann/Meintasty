@@ -8,14 +8,14 @@ namespace Meintasty.Application.Contract.Register.Commands
     public class CreateUserCommandRequest : IRequest<GeneralResponse<CreateUserCommandResponse>>
     {
         [DataMember]
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
         [DataMember]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [DataMember]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         [DataMember]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [DataMember]
-        public string RePassword { get; set; }
+        public string? RePassword { get; set; }
     }
 }
