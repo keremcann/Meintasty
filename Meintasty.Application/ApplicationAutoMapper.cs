@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Meintasty.Application.Contract.Address;
+using Meintasty.Application.Contract.Address.Queries;
 using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.City.Queries;

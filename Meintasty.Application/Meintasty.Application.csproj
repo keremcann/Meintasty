@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Meintasty.Domain\Meintasty.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Category\" />
+  </ItemGroup>
+
 </Project>

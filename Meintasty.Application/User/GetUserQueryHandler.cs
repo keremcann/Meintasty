@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Meintasty.Application.Contract.Address;
+using Meintasty.Application.Contract.Address.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.User.Queries;
 using Meintasty.Core.Common;
