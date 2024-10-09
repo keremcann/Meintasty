@@ -12,5 +12,12 @@ namespace Meintasty.Domain.Repository
         /// <param name="request"></param>
         /// <returns></returns>
         Task<GeneralResponse<List<Category>>> GetAllByInfoAsync(Category request);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<List<Category>>> GetAllByIdAsync(int id);
     }
 }

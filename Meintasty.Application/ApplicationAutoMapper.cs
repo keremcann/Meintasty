@@ -54,6 +54,10 @@ namespace Meintasty.Application
             CreateMap<RestaurantOrderContract, RestaurantOrder>().ReverseMap();
             #endregion
 
+            #region Restaurant Category
+            CreateMap<GetCategoryRestaurantQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
+            #endregion
+
             #region Basket
             CreateMap<GetBasketQueryResponse, Domain.Entity.Basket>().ReverseMap();
             #endregion

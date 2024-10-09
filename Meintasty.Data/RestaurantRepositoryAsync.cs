@@ -55,7 +55,42 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Restaurant>>> GetAllByIdAsync(int id)
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCategoryIdAsync(int id)
+        {
+            var data = new GeneralResponse<List<Restaurant>>();
+            data.Value = new List<Restaurant>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@CategoryId", id);
+
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_AllRestaurantsByCategoryId", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdAsync(int id)
         {
             var data = new GeneralResponse<List<Restaurant>>();
             data.Value = new List<Restaurant>();

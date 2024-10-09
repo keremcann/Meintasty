@@ -11,7 +11,14 @@ namespace Meintasty.Domain.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<GeneralResponse<List<Restaurant>>> GetAllByIdAsync(int id);
+        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdAsync(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<List<Restaurant>>> GetAllByCategoryIdAsync(int id);
 
         /// <summary>
         /// 

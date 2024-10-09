@@ -93,6 +93,39 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<List<Category>>> GetAllByIdAsync(int id)
+        {
+            var data = new GeneralResponse<List<Category>>();
+            data.Value = new List<Category>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@RestaurantId", id);
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<Category>("sel_CategoriesByRestaurantId", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         public async Task<GeneralResponse<List<Category>>> GetAllByInfoAsync(Category request)
@@ -109,7 +142,7 @@ namespace Meintasty.Data
             parameters.Add("@TopCount", 10);
             try
             {
-                data.Value = connection?.db?.QueryAsync<Category>("sel_CategoriesByInfo", CommandType.StoredProcedure).Result.ToList();
+                data.Value = connection?.db?.QueryAsync<Category>("sel_CategoriesByInfo", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);

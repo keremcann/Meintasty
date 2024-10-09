@@ -23,11 +23,24 @@ namespace Meintasty.ApiHost.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        //[Authorize(Roles = "Admin,Member")]
+        [AllowAnonymous]
         [HttpPost("getCategories")]
         public async Task<GeneralResponse<List<GetCategoryQueryResponse>>> GetCategories([FromBody] GetCategoryQueryRequest request)
         {
             GeneralResponse<List<GetCategoryQueryResponse>> response = await _mediator.Send(request);
+            return response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("getRestaurantsByCategoryId")]
+        public async Task<GeneralResponse<List<GetCategoryRestaurantQueryResponse>>> GetRestaurantsByCategoryId([FromBody] GetCategoryRestaurantQueryRequest request)
+        {
+            GeneralResponse<List<GetCategoryRestaurantQueryResponse>> response = await _mediator.Send(request);
             return response;
         }
     }

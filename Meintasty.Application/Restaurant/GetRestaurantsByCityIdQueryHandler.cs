@@ -33,7 +33,7 @@ namespace Meintasty.Application.Restaurant
             var response = new GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>();
             response.Value = new List<GetRestaurantsByCityIdQueryResponse>();
 
-            var restaurants = _restaurantRepository.GetAllByIdAsync(request.CityCode);
+            var restaurants = _restaurantRepository.GetAllByCityIdAsync(request.CityCode);
 
             if (!restaurants.Result.Success)
             {
