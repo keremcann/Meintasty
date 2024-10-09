@@ -2,6 +2,7 @@
 using Meintasty.Application.Contract.Address.Queries;
 using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
+using Meintasty.Application.Contract.Category.Queries;
 using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Home.Queries;
 using Meintasty.Application.Contract.Register.Commands;
@@ -63,6 +64,10 @@ namespace Meintasty.Application
 
             #region User Address
             CreateMap<GetUserAddressResponse, UserAddress>().ReverseMap();
+            #endregion
+
+            #region Category
+            CreateMap<GetCategoryQueryResponse, Domain.Entity.Category>().ReverseMap();
             #endregion
         }
     }

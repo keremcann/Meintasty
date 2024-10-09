@@ -8,6 +8,9 @@ namespace Meintasty.Application.Canton
 {
     public class GetCantonQueryHandler : IRequestHandler<GetCantonQueryRequest, GeneralResponse<List<GetCantonQueryResponse>>>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IMapper _mapper;
         private readonly ICantonRepositoryAsync _cantonRepository;
         private readonly ICityRepositoryAsync _cityRepository;

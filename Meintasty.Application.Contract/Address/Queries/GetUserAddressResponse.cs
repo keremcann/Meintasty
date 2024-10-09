@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Meintasty.Application.Contract.Address
+namespace Meintasty.Application.Contract.Address.Queries
 {
     [DataContract]
     public class GetUserAddressResponse

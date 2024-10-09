@@ -1,4 +1,4 @@
-﻿using Meintasty.Application.Contract.Address;
+﻿using Meintasty.Application.Contract.Address.Queries;
 using System.Runtime.Serialization;
 
 namespace Meintasty.Application.Contract.User.Queries
