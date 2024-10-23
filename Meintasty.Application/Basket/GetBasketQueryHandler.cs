@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Meintasty.Application.Contract.Basket.Queries;
-using Meintasty.Application.Contract.Restaurant.Queries;
 using Meintasty.Core.Common;
-using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Basket

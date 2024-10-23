@@ -47,7 +47,7 @@ namespace Meintasty.ApiHost.Helpers
         /// <returns></returns>
         internal static string GenerateToken(GetLoginQueryRequest user, List<string>? roles)
         {
-            var expiration = DateTime.UtcNow.AddMinutes(30);
+            var expiration = DateTime.UtcNow.AddHours(5);
             var token = CreateJwtToken(
                 CreateClaims(user, roles),
                 CreateSigningCredentials(),
@@ -92,7 +92,8 @@ namespace Meintasty.ApiHost.Helpers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
                     new Claim(ClaimTypes.Email, user.Email ?? "info@meintasty.com"),
-                    new Claim(ClaimTypes.Name, "SystemUser")
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Name, user.FullName ?? "")
                 };
                 
                 if (roles != null && roles.Count > 0 ) 

@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Meintasty.ApiHost.Helpers;
+using Meintasty.Application.Contract.Login.Queries;
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Core.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +30,18 @@ namespace Meintasty.ApiHost.Controllers
         public async Task<GeneralResponse<CreateUserCommandResponse>> SignUp([FromBody] CreateUserCommandRequest request)
         {
             GeneralResponse<CreateUserCommandResponse> response = await _mediator.Send(request);
+            if (response.Success)
+            {
+                var loginRequest = new GetLoginQueryRequest
+                {
+                    UserId = response.Value.UserId,
+                    Email = request.Email,
+                    Password = request.Password,
+                    FullName = response.Value.FullName
+                };
+                string token = MeinTastyHelper.GenerateToken(loginRequest, response.Value.RoleList);
+                response.Value.Token = token;
+            }
             return response;
         }
     }

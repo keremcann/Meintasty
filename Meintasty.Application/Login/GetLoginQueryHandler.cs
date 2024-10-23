@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Meintasty.Application.Contract.Login.Queries;
 using Meintasty.Core.Common;
-using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Login

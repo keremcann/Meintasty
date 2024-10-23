@@ -13,16 +13,18 @@ namespace Meintasty.Application.Register
         /// </summary>
         private readonly IUserRepositoryAsync _userRepository;
         private readonly IUserRoleRepositoryAsync _userRoleRepository;
+        private readonly IRoleRepositoryAsync _roleRepository;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="userRepository"></param>
         /// <param name="userRoleRepository"></param>
-        public CreateUserCommandHandler(IUserRepositoryAsync userRepository, IUserRoleRepositoryAsync userRoleRepository)
+        public CreateUserCommandHandler(IUserRepositoryAsync userRepository, IUserRoleRepositoryAsync userRoleRepository, IRoleRepositoryAsync roleRepository)
         {
             _userRepository = userRepository;
             _userRoleRepository = userRoleRepository;
+            _roleRepository = roleRepository;
         }
 
         /// <summary>
@@ -91,8 +93,22 @@ namespace Meintasty.Application.Register
                 return await Task.FromResult(response);
             }
 
+            var roles = await _roleRepository.GetAllByIdAsync(user.Value.Id);
+            if (!roles.Success)
+            {
+                response.Success = roles.Success;
+                response.ErrorMessage = roles.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
             response.Success = true;
             response.InfoMessage = "Başarılı";
+            response.Value.UserId = user.Value.Id;
+            response.Value.RoleList = new List<string>();
+            foreach (var role in roles.Value)
+            {
+                response.Value.RoleList.Add(role.RoleName);
+            }            
             response.Value.FullName = user?.Value?.FullName ?? string.Empty;
 
             return await Task.FromResult(response);

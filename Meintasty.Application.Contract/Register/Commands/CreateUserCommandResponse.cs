@@ -7,6 +7,12 @@ namespace Meintasty.Application.Contract.Register.Commands
     public class CreateUserCommandResponse
     {
         [DataMember]
-        public string FullName { get; set; }
+        public int UserId { get; set; }
+        [DataMember]
+        public string? FullName { get; set; }
+        [DataMember]
+        public string? Token { get; set; }
+        [DataMember]
+        public List<string>? RoleList { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Meintasty.Core.Common;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Meintasty.Application.Contract.Login.Queries
 {
