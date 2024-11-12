@@ -47,7 +47,7 @@ namespace Meintasty.ApiHost.Helpers
         /// <returns></returns>
         internal static string GenerateToken(GetLoginQueryRequest user, List<string>? roles)
         {
-            var expiration = DateTime.UtcNow.AddHours(5);
+            var expiration = DateTime.UtcNow.AddDays(15);
             var token = CreateJwtToken(
                 CreateClaims(user, roles),
                 CreateSigningCredentials(),

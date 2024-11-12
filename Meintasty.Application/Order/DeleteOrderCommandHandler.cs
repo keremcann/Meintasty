@@ -35,9 +35,9 @@ namespace Meintasty.Application.Order
             var order = await _orderRepository.DeleteAsync(new Domain.Entity.Order
             {
                 Id = request.OrderId,
-                CreateDate = DateTime.UtcNow,
-                CreateUser = 1,
-                IsActive = true,
+                DeleteDate = DateTime.UtcNow,
+                DeleteUser = 1,
+                IsActive = false,
             });
 
             if (!order.Success)
