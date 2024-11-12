@@ -34,7 +34,6 @@ namespace Meintasty.Data
                     request.UserId,
                     request.RestaurantId,
                     request.Name,
-                    request.OrderDate,
                     request.Price,
                     request.CurrencyCode,
                     request.PaymentType,

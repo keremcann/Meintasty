@@ -12,8 +12,6 @@ namespace Meintasty.Application.Contract.Order.Commands
         [DataMember]
         public int RestaurantId { get; set; }
         [DataMember]
-        public string? OrderDate { get; set; }
-        [DataMember]
         public string? PaymentType { get; set; }
         [DataMember]
         public string? Price { get; set; }

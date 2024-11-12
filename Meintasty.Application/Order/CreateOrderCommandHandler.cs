@@ -37,7 +37,6 @@ namespace Meintasty.Application.Order
                 UserId = request.UserId,
                 RestaurantId = request.RestaurantId,
                 Name = request.UserId + "-" + request.RestaurantId + "-Order-" + DateTime.Now.ToString(),
-                OrderDate = request.OrderDate,
                 Price = request.Price,
                 CurrencyCode = request.CurrencyCode ?? "EUR",
                 PaymentType = request.PaymentType,
