@@ -32,6 +32,24 @@ namespace Meintasty.Application.Order
             var response = new GeneralResponse<DeleteOrderCommandResponse>();
             response.Value = new DeleteOrderCommandResponse();
 
+            var order = await _orderRepository.DeleteAsync(new Domain.Entity.Order
+            {
+                Id = request.OrderId,
+                CreateDate = DateTime.UtcNow,
+                CreateUser = 1,
+                IsActive = true,
+            });
+
+            if (!order.Success)
+            {
+                response.Success = order.Success;
+                response.ErrorMessage = order.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Başarılı";
+
             return await Task.FromResult(response);
         }
     }

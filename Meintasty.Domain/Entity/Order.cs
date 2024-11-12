@@ -9,7 +9,7 @@ namespace Meintasty.Domain.Entity
         public int UserId { get; set; }
         public int RestaurantId { get; set; }
         public string? Name { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string? OrderDate { get; set; }
         public string? Price { get; set; }
         public string? CurrencyCode { get; set; }
         public string? PaymentType { get; set; }

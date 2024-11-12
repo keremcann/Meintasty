@@ -14,12 +14,12 @@ namespace Meintasty.Application.Contract.Basket.Commands
         [DataMember]
         public int MenuId { get; set; }
         [DataMember]
-        public string BasketDate { get; set; }
+        public string? BasketDate { get; set; }
         [DataMember]
-        public int Quantity { get; set;}
+        public int Quantity { get; set; }
         [DataMember]
-        public string Price { get; set; }
+        public string? Price { get; set; }
         [DataMember]
-        public string CurrencyCode { get; set;}
+        public string? CurrencyCode { get; set; }
     }
 }

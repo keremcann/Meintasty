@@ -5,6 +5,7 @@ using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Category.Queries;
 using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Home.Queries;
+using Meintasty.Application.Contract.Order.Queries;
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Application.Contract.Restaurant;
 using Meintasty.Application.Contract.Restaurant.Queries;
@@ -60,6 +61,10 @@ namespace Meintasty.Application
 
             #region Basket
             CreateMap<GetBasketQueryResponse, Domain.Entity.Basket>().ReverseMap();
+            #endregion
+
+            #region Order
+            CreateMap<GetOrderQueryResponse, Domain.Entity.Order>().ReverseMap();
             #endregion
 
             #region Home Restaurant Menu

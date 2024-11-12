@@ -31,11 +31,20 @@ namespace Meintasty.Data
             {
                 var order = connection?.db?.QueryAsync<Int32>("ins_NewOrder", new
                 {
+                    request.UserId,
+                    request.RestaurantId,
+                    request.Name,
+                    request.OrderDate,
+                    request.Price,
+                    request.CurrencyCode,
+                    request.PaymentType,
+                    request.OrderTip,
                     request.CreateUser,
                     request.CreateDate,
                     request.IsActive
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
 
+                data.Value.Id = order.Value;
                 data.Success = true;
                 data.InfoMessage = "Sipariş oluşturuldu!";
 

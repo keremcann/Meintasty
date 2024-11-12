@@ -32,6 +32,31 @@ namespace Meintasty.Application.Order
             var response = new GeneralResponse<CreateOrderCommandResponse>();
             response.Value = new CreateOrderCommandResponse();
 
+            var order = await _orderRepository.AddAsync(new Domain.Entity.Order
+            {
+                UserId = request.UserId,
+                RestaurantId = request.RestaurantId,
+                Name = request.Name ?? request.UserId + "-" + request.RestaurantId + "-Order",
+                OrderDate = request.OrderDate,
+                Price = request.Price,
+                CurrencyCode = request.CurrencyCode ?? "EUR",
+                PaymentType = request.PaymentType,
+                OrderTip = request.OrderTip ?? "0",
+                CreateDate = DateTime.UtcNow,
+                CreateUser = 1,
+                IsActive = true,
+            });
+
+            if (!order.Success)
+            {
+                response.Success = order.Success;
+                response.ErrorMessage = order.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Başarılı";
+
             return await Task.FromResult(response);
         }
     }
