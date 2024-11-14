@@ -18,7 +18,7 @@ namespace Meintasty.Application.Contract.Basket.Commands
         [DataMember]
         public int Quantity { get; set; }
         [DataMember]
-        public string? Price { get; set; }
+        public double Price { get; set; }
         [DataMember]
         public string? CurrencyCode { get; set; }
     }

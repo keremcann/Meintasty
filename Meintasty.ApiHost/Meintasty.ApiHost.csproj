@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Meintasty.Application.Contract\Meintasty.Application.Contract.csproj" />
     <ProjectReference Include="..\Meintasty.Application\Meintasty.Application.csproj" />
     <ProjectReference Include="..\Meintasty.Data\Meintasty.Data.csproj" />
+    <ProjectReference Include="..\Meintasty.Domain.Shared\Meintasty.Domain.Shared.csproj" />
     <ProjectReference Include="..\Meintasty.Domain\Meintasty.Domain.csproj" />
   </ItemGroup>
 

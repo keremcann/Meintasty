@@ -32,6 +32,24 @@ namespace Meintasty.Application.Basket
             var response = new GeneralResponse<UpdateBasketCommandResponse>();
             response.Value = new UpdateBasketCommandResponse();
 
+            var basket = await _basketRepository.UpdateAsync(new Domain.Entity.Basket
+            {
+                Id = request.BasketId,
+                Quantity = request.Quantity,
+                UpdateDate = DateTime.UtcNow,
+                UpdateUser = 1
+            });
+
+            if (!basket.Success)
+            {
+                response.Success = basket.Success;
+                response.ErrorMessage = basket.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = "Başarılı";
+
             return await Task.FromResult(response);
         }
     }

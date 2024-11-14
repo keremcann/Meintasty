@@ -250,6 +250,8 @@ namespace Meintasty.Data
             {
                 var basket = connection?.db?.QueryAsync<Int32>("upd_Basket", new
                 {
+                    request.Id,
+                    request.Quantity,
                     request.UpdateUser,
                     request.UpdateDate
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();

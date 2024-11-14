@@ -38,7 +38,7 @@ namespace Meintasty.Application.Basket
                 RestaurantId = request.RestaurantId,
                 MenuId = request.MenuId,
                 Quantity = request.Quantity,
-                Price = request.Price,
+                Price = request.Price.ToString(),
                 CurrencyCode = request.CurrencyCode ?? "EUR",
                 BasketDate = DateTime.UtcNow,
                 CreateDate = DateTime.UtcNow,

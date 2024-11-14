@@ -93,7 +93,8 @@ namespace Meintasty.ApiHost.Helpers
                     new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
                     new Claim(ClaimTypes.Email, user.Email ?? "info@meintasty.com"),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, user.FullName ?? "")
+                    new Claim(ClaimTypes.Name, user.FullName ?? ""),
+                    new Claim(ClaimTypes.SerialNumber, user.UserId.ToString())
                 };
                 
                 if (roles != null && roles.Count > 0 ) 

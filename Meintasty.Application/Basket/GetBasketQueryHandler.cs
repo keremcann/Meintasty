@@ -3,6 +3,7 @@ using MediatR;
 using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Basket
 {
@@ -37,7 +38,7 @@ namespace Meintasty.Application.Basket
 
             var baskets = await _basketRepository.GetAllByInfoAsync(new Domain.Entity.Basket
             {
-                UserId = request.UserId,
+                UserId = UserSettings.UserId,//request.UserId,
                 RestaurantId = request.RestaurantId,
             });
 

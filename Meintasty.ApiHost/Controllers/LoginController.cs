@@ -31,6 +31,8 @@ namespace Meintasty.ApiHost.Controllers
             GeneralResponse<GetLoginQueryResponse> response = await _mediator.Send(request);
             if (response.Success) 
             {
+                request.UserId = response.Value.UserId;
+                request.FullName = response.Value.FullName;
                 string token =  MeinTastyHelper.GenerateToken(request, response.Value.RoleList);
                 response.Value.Token = token;
             }

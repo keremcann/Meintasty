@@ -10,6 +10,8 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
         [DataMember]
         public string? Email { get; set; }
         [DataMember]
+        public string? Url { get; set; }
+        [DataMember]
         public string? PhoneNumber { get; set; }
         [DataMember]
         public string? TaxNumber { get; set; }

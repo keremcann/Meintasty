@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Meintasty.ApiHost.Helpers;
 using Meintasty.Application.Contract.User.Commands;
 using Meintasty.Application.Contract.User.Queries;
 using Meintasty.Core.Common;
@@ -9,6 +10,7 @@ namespace Meintasty.ApiHost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtTokenFilter("fvh8456477hth44j6wfds98bq9hp8bqh9ubq9gjig3qr0[94vj5")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
