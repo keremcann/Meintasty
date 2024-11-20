@@ -25,5 +25,7 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
         public string? WorkHourFrom { get; set; }
         [DataMember]
         public string? WorkHourTo { get; set; }
+        [DataMember]
+        public int TotalCount { get; set; }
     }
 }

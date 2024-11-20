@@ -57,7 +57,16 @@ namespace Meintasty.Application.Restaurant
                     return await Task.FromResult(response);
                 }
 
+                var totalCount = await _restaurantRepository.GetTotalCountAsync(request.CityCode, request.CategoryId);
+                if (!totalCount.Success)
+                {
+                    response.Success = totalCount.Success;
+                    response.ErrorMessage = totalCount.ErrorMessage;
+                    return await Task.FromResult(response);
+                }
+
                 response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Value);
+                response.Value.ForEach(x => x.TotalCount = totalCount.Value);
                 response.Success = true;
                 response.InfoMessage = "Success";
 
@@ -65,22 +74,22 @@ namespace Meintasty.Application.Restaurant
             }
             else
             {
-                var restaurants = _restaurantRepository.GetAllByCityIdAsync(request.CityCode);
+                var restaurants = await _restaurantRepository.GetAllByCityIdAsync(request.CityCode);
 
-                if (!restaurants.Result.Success)
+                if (!restaurants.Success)
                 {
-                    response.Success = restaurants.Result.Success;
-                    response.ErrorMessage = restaurants.Result.ErrorMessage;
+                    response.Success = restaurants.Success;
+                    response.ErrorMessage = restaurants.ErrorMessage;
                     return await Task.FromResult(response);
                 }
-                if (restaurants.Result.Value == null)
+                if (restaurants.Value == null)
                 {
                     response.Success = false;
                     response.ErrorMessage = "Not found any Restaurant!";
                     return await Task.FromResult(response);
                 }
 
-                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Result.Value);
+                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Value);
                 response.Success = true;
                 response.InfoMessage = "Success";
 
