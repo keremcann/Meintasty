@@ -125,7 +125,7 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset)
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, int? categoryId)
         {
             var data = new GeneralResponse<List<Restaurant>>();
             data.Value = new List<Restaurant>();
@@ -140,6 +140,7 @@ namespace Meintasty.Data
             parameters.Add("@CityCode", cityId);
             parameters.Add("@PageSize", pageSize);
             parameters.Add("@Offset", offset);
+            parameters.Add("@CategoryId", categoryId);
 
             try
             {

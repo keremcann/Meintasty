@@ -42,7 +42,7 @@ namespace Meintasty.Application.Restaurant
                 }
 
                 int offset = (request.PageNumber - 1) * request.PageSize;
-                var restaurants = await _restaurantRepository.GetAllByCityIdWithPagingAsync(request.CityCode, request.PageSize, offset);
+                var restaurants = await _restaurantRepository.GetAllByCityIdWithPagingAsync(request.CityCode, request.PageSize, offset, request.CategoryId);
 
                 if (!restaurants.Success)
                 {

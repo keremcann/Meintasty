@@ -16,9 +16,12 @@ namespace Meintasty.Domain.Repository
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cityId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="offset"></param>
+        /// <param name="categoryId"></param>
         /// <returns></returns>
-        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset);
+        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, int? categoryId);
 
         /// <summary>
         /// 
