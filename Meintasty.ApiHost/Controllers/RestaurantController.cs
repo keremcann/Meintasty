@@ -31,6 +31,7 @@ namespace Meintasty.ApiHost.Controllers
         [HttpPost("getRestaurantsByCityId")]
         public async Task<GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
         {
+            request.IsPaging = true;
             GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>> response = await _mediator.Send(request);
             return response;
         }

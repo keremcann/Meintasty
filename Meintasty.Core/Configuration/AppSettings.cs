@@ -61,5 +61,16 @@ namespace Meintasty.Core.Configuration
             IConfiguration configuration = builder.Build();
             return configuration.GetSection("CnnStrPassKey").Value;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string? GetPageSize()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.json", true, false);
+            IConfiguration configuration = builder.Build();
+            return configuration.GetSection("PageSize").Value;
+        }
     }
 }

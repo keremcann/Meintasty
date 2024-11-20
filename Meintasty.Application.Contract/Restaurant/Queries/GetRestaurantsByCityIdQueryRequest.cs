@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Meintasty.Core.Common;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Meintasty.Application.Contract.Restaurant.Queries
 {
@@ -10,6 +11,12 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
         [DataMember]
         public int CityCode { get; set; }
         [DataMember]
-        public int CityId { get; set; }
+        public int? CategoryId { get; set; }
+        [DataMember]
+        public int PageNumber { get; set; }
+        [DataMember]
+        public int PageSize { get; set; }
+        [JsonIgnore]
+        public bool IsPaging { get; set; }
     }
 }

@@ -123,6 +123,43 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset)
+        {
+            var data = new GeneralResponse<List<Restaurant>>();
+            data.Value = new List<Restaurant>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@CityCode", cityId);
+            parameters.Add("@PageSize", pageSize);
+            parameters.Add("@Offset", offset);
+
+            try
+            {
+                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_AllRestaurantsWithPagination", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         public async Task<GeneralResponse<Restaurant>> GetAsync(Restaurant request)

@@ -2,6 +2,7 @@
 using MediatR;
 using Meintasty.Application.Contract.Restaurant.Queries;
 using Meintasty.Core.Common;
+using Meintasty.Core.Configuration;
 using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Restaurant
@@ -32,27 +33,59 @@ namespace Meintasty.Application.Restaurant
         {
             var response = new GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>();
             response.Value = new List<GetRestaurantsByCityIdQueryResponse>();
-
-            var restaurants = _restaurantRepository.GetAllByCityIdAsync(request.CityCode);
-
-            if (!restaurants.Result.Success)
+            
+            if (request.IsPaging)
             {
-                response.Success = restaurants.Result.Success;
-                response.ErrorMessage = restaurants.Result.ErrorMessage;
+                if (request.PageSize <= 0)
+                {
+                    request.PageSize = Convert.ToInt32(AppSettings.GetPageSize());
+                }
+
+                int offset = (request.PageNumber - 1) * request.PageSize;
+                var restaurants = await _restaurantRepository.GetAllByCityIdWithPagingAsync(request.CityCode, request.PageSize, offset);
+
+                if (!restaurants.Success)
+                {
+                    response.Success = restaurants.Success;
+                    response.ErrorMessage = restaurants.ErrorMessage;
+                    return await Task.FromResult(response);
+                }
+                if (restaurants.Value == null)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Not found any Restaurant!";
+                    return await Task.FromResult(response);
+                }
+
+                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Value);
+                response.Success = true;
+                response.InfoMessage = "Success";
+
                 return await Task.FromResult(response);
             }
-            if (restaurants.Result.Value == null)
+            else
             {
-                response.Success = false;
-                response.ErrorMessage = "Not found any Restaurant!";
+                var restaurants = _restaurantRepository.GetAllByCityIdAsync(request.CityCode);
+
+                if (!restaurants.Result.Success)
+                {
+                    response.Success = restaurants.Result.Success;
+                    response.ErrorMessage = restaurants.Result.ErrorMessage;
+                    return await Task.FromResult(response);
+                }
+                if (restaurants.Result.Value == null)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Not found any Restaurant!";
+                    return await Task.FromResult(response);
+                }
+
+                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Result.Value);
+                response.Success = true;
+                response.InfoMessage = "Success";
+
                 return await Task.FromResult(response);
             }
-
-            response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Result.Value);
-            response.Success = true;
-            response.InfoMessage = "Success";
-
-            return await Task.FromResult(response);
         }
     }
 }
