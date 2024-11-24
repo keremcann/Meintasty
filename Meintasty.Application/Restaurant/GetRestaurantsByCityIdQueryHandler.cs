@@ -7,7 +7,7 @@ using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Restaurant
 {
-    public class GetRestaurantsByCityIdQueryHandler : IRequestHandler<GetRestaurantsByCityIdQueryRequest, GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>>
+    public class GetRestaurantsByCityIdQueryHandler : IRequestHandler<GetRestaurantsByCityIdQueryRequest, GeneralResponse<GetRestaurantsByCityIdQueryResponse>>
     {
         private readonly IMapper _mapper;
         private readonly IRestaurantRepositoryAsync _restaurantRepository;
@@ -29,10 +29,11 @@ namespace Meintasty.Application.Restaurant
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>> Handle(GetRestaurantsByCityIdQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<GetRestaurantsByCityIdQueryResponse>> Handle(GetRestaurantsByCityIdQueryRequest request, CancellationToken cancellationToken)
         {
-            var response = new GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>();
-            response.Value = new List<GetRestaurantsByCityIdQueryResponse>();
+            var response = new GeneralResponse<GetRestaurantsByCityIdQueryResponse>();
+            response.Value = new GetRestaurantsByCityIdQueryResponse();
+            response.Value.Restaurants = new List<RestaurantsByCityIdContract>();
             
             if (request.IsPaging)
             {
@@ -42,7 +43,7 @@ namespace Meintasty.Application.Restaurant
                 }
 
                 int offset = (request.PageNumber - 1) * request.PageSize;
-                var restaurants = await _restaurantRepository.GetAllByCityIdWithPagingAsync(request.CityCode, request.PageSize, offset, request.CategoryId);
+                var restaurants = await _restaurantRepository.GetAllByCityIdWithPagingAsync(request.CityCode, request.PageSize, offset, request.CategoryIdList);
 
                 if (!restaurants.Success)
                 {
@@ -57,16 +58,26 @@ namespace Meintasty.Application.Restaurant
                     return await Task.FromResult(response);
                 }
 
-                var totalCount = await _restaurantRepository.GetTotalCountAsync(request.CityCode, request.CategoryId);
-                if (!totalCount.Success)
+                var itemCount = await _restaurantRepository.GetTotalCountAsync(request.CityCode, request.CategoryIdList);
+                if (!itemCount.Success)
                 {
-                    response.Success = totalCount.Success;
-                    response.ErrorMessage = totalCount.ErrorMessage;
+                    response.Success = itemCount.Success;
+                    response.ErrorMessage = itemCount.ErrorMessage;
                     return await Task.FromResult(response);
                 }
 
-                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Value);
-                response.Value.ForEach(x => x.TotalCount = totalCount.Value);
+                int totalCount = itemCount.Value;
+                int totalPages = (int)Math.Ceiling((double)totalCount / request.PageSize);
+
+                int? prevPage = request.PageNumber > 1 ? (int?)(request.PageNumber - 1) : null;
+                int? nextPage = request.PageNumber < totalPages ? (int?)(request.PageNumber + 1) : null;
+
+                response.Value.Restaurants = _mapper.Map<List<RestaurantsByCityIdContract>>(restaurants.Value);
+                response.Value.TotalCount = totalCount;
+                response.Value.TotalPages = totalPages;                
+                response.Value.PrevPage = prevPage;
+                response.Value.CurrentPage = request.PageNumber;
+                response.Value.NextPage = nextPage;
                 response.Success = true;
                 response.InfoMessage = "Success";
 
@@ -89,7 +100,7 @@ namespace Meintasty.Application.Restaurant
                     return await Task.FromResult(response);
                 }
 
-                response.Value = _mapper.Map<List<GetRestaurantsByCityIdQueryResponse>>(restaurants.Value);
+                response.Value.Restaurants = _mapper.Map<List<RestaurantsByCityIdContract>>(restaurants.Value);
                 response.Success = true;
                 response.InfoMessage = "Success";
 

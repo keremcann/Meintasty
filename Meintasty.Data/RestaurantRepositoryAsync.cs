@@ -124,9 +124,12 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cityId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="offset"></param>
+        /// <param name="categoryIdList"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, int? categoryId)
+        public async Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, List<int>? categoryIdList)
         {
             var data = new GeneralResponse<List<Restaurant>>();
             data.Value = new List<Restaurant>();
@@ -137,15 +140,33 @@ namespace Meintasty.Data
                 return await Task.FromResult(data);
             }
 
+            string spName = string.Empty;
             var parameters = new DynamicParameters();
             parameters.Add("@CityCode", cityId);
             parameters.Add("@PageSize", pageSize);
             parameters.Add("@Offset", offset);
-            parameters.Add("@CategoryId", categoryId);
+
+            if (categoryIdList != null && categoryIdList.Count > 0)
+            {
+                var idTable = new DataTable();
+                idTable.Columns.Add("Id", typeof(int));
+
+                foreach (var id in categoryIdList)
+                {
+                    idTable.Rows.Add(id);
+                }
+
+                parameters.Add("@Ids", idTable.AsTableValuedParameter("IntListType"));
+                spName = "sel_RestaurantsByFilter";
+            }
+            else
+            {
+                spName = "sel_RestaurantsByCityId";
+            }            
 
             try
             {
-                var result = await connection.db.QueryAsync<Restaurant>("sel_AllRestaurantsWithPagination", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.db.QueryAsync<Restaurant>(spName, parameters, commandType: CommandType.StoredProcedure);
                 data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
@@ -231,9 +252,9 @@ namespace Meintasty.Data
         /// 
         /// </summary>
         /// <param name="cityId"></param>
-        /// <param name="categoryId"></param>
+        /// <param name="categoryIdList"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<Int32>> GetTotalCountAsync(int cityId, int? categoryId)
+        public async Task<GeneralResponse<Int32>> GetTotalCountAsync(int cityId, List<int>? categoryIdList)
         {
             var data = new GeneralResponse<Int32>();
             if (!connection.Success)
@@ -242,10 +263,30 @@ namespace Meintasty.Data
                 data.ErrorMessage = connection.ErrorMessage;
                 return await Task.FromResult(data);
             }
+            
+            string spName = string.Empty;
+
             var parameters = new DynamicParameters();
             parameters.Add("@CityCode", cityId);
-            parameters.Add("@CategoryId", categoryId);
-            string spName = "sel_RestaurantCountWithPagination";
+
+            if (categoryIdList != null && categoryIdList.Count > 0)
+            {
+                var idTable = new DataTable();
+                idTable.Columns.Add("Id", typeof(int));
+
+                foreach (var id in categoryIdList)
+                {
+                    idTable.Rows.Add(id);
+                }
+
+                parameters.Add("@Ids", idTable.AsTableValuedParameter("IntListType"));
+                spName = "sel_RestaurantCountByFilter";
+            }
+            else
+            {
+                spName = "sel_RestaurantCount";
+            }
+
             try
             {
                 var result = await connection.db.QueryAsync<Int32>(spName, parameters, commandType: CommandType.StoredProcedure);

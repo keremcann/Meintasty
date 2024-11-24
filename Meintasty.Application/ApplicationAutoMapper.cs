@@ -32,7 +32,7 @@ namespace Meintasty.Application
             #endregion
 
             #region Restaurant By City
-            CreateMap<GetRestaurantsByCityIdQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
+            CreateMap<RestaurantsByCityIdContract, Domain.Entity.Restaurant>().ReverseMap();
             #endregion
 
             #region Restaurant By Id

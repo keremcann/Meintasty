@@ -6,6 +6,22 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
     public class GetRestaurantsByCityIdQueryResponse
     {
         [DataMember]
+        public int TotalCount { get; set; }
+        [DataMember]
+        public int TotalPages { get; set; }
+        [DataMember]
+        public int CurrentPage { get; set; }
+        [DataMember]
+        public int? NextPage { get; set; }
+        [DataMember]
+        public int? PrevPage { get; set; }
+        [DataMember]
+        public List<RestaurantsByCityIdContract>? Restaurants { get; set; }
+    }
+
+    public class RestaurantsByCityIdContract
+    {
+        [DataMember]
         public int Id { get; set; }
         [DataMember]
         public string? RestaurantName { get; set; }

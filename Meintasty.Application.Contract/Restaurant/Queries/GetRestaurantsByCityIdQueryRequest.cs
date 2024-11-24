@@ -6,15 +6,15 @@ using System.Text.Json.Serialization;
 namespace Meintasty.Application.Contract.Restaurant.Queries
 {
     [DataContract]
-    public class GetRestaurantsByCityIdQueryRequest : IRequest<GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>>
+    public class GetRestaurantsByCityIdQueryRequest : IRequest<GeneralResponse<GetRestaurantsByCityIdQueryResponse>>
     {
         [DataMember]
         public int CityCode { get; set; }
         [DataMember]
-        public int? CategoryId { get; set; }
+        public List<int>? CategoryIdList { get; set; }
         [DataMember]
         public int PageNumber { get; set; }
-        [DataMember]
+        [JsonIgnore]
         public int PageSize { get; set; }
         [JsonIgnore]
         public bool IsPaging { get; set; }

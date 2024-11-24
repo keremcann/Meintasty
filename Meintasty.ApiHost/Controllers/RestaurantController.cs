@@ -29,10 +29,10 @@ namespace Meintasty.ApiHost.Controllers
         //[Authorize(Roles = "Admin,Member")]
         [AllowAnonymous]
         [HttpPost("getRestaurantsByCityId")]
-        public async Task<GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>>> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
+        public async Task<GeneralResponse<GetRestaurantsByCityIdQueryResponse>> GetRestaurantsByCityId([FromBody] GetRestaurantsByCityIdQueryRequest request)
         {
             request.IsPaging = true;
-            GeneralResponse<List<GetRestaurantsByCityIdQueryResponse>> response = await _mediator.Send(request);
+            GeneralResponse<GetRestaurantsByCityIdQueryResponse> response = await _mediator.Send(request);
             return response;
         }
 

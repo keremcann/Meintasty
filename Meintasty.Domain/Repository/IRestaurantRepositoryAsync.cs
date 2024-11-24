@@ -21,7 +21,7 @@ namespace Meintasty.Domain.Repository
         /// <param name="offset"></param>
         /// <param name="categoryId"></param>
         /// <returns></returns>
-        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, int? categoryId);
+        Task<GeneralResponse<List<Restaurant>>> GetAllByCityIdWithPagingAsync(int cityId, int pageSize, int offset, List<int>? categoryIdList);
 
         /// <summary>
         /// 
@@ -40,9 +40,9 @@ namespace Meintasty.Domain.Repository
         /// 
         /// </summary>
         /// <param name="cityId"></param>
-        /// <param name="categoryId"></param>
+        /// <param name="categoryIdList"></param>
         /// <returns></returns>
-        Task<GeneralResponse<Int32>> GetTotalCountAsync(int cityId, int? categoryId);
+        Task<GeneralResponse<Int32>> GetTotalCountAsync(int cityId, List<int>? categoryIdList);
 
     }
 }
