@@ -9,8 +9,18 @@ namespace Meintasty.Domain.Repository
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="request"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
-        Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request);
+        Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request, int pagesize, int offset);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="resId"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Int32>> GetTotalCountAsync(int userId, int resId);
     }
 }

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
-using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Order.Queries;
 using Meintasty.Core.Common;
-using Meintasty.Domain.Entity;
+using Meintasty.Core.Configuration;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Order
 {
-    public class GetOrderQueryHandler : IRequestHandler<GetOrderQueryRequest, GeneralResponse<List<GetOrderQueryResponse>>>
+    public class GetOrderQueryHandler : IRequestHandler<GetOrderQueryRequest, GeneralResponse<GetOrderQueryResponse>>
     {
         /// <summary>
         /// 
@@ -33,17 +33,21 @@ namespace Meintasty.Application.Order
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<GetOrderQueryResponse>>> Handle(GetOrderQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<GetOrderQueryResponse>> Handle(GetOrderQueryRequest request, CancellationToken cancellationToken)
         {
-            var response = new GeneralResponse<List<GetOrderQueryResponse>>();
-            response.Value = new List<GetOrderQueryResponse>();
+            var response = new GeneralResponse<GetOrderQueryResponse>();
+            response.Value = new GetOrderQueryResponse();
+            response.Value.Orders = new List<GetOrderQueryContract>();
 
-            var orders = await _orderRepository.GetAllByInfoAsync(new Domain.Entity.Order
+            int pageSize = Convert.ToInt32(AppSettings.GetPageSize());
+            int offset = (request.PageNumber - 1) * pageSize;
+
+            Domain.Entity.Order order = new Domain.Entity.Order()
             {
-                UserId = request.UserId,
-                RestaurantId = request.RestaurantId,
-            });
-
+                UserId = UserSettings.UserId,
+                RestaurantId = request.RestaurantId ?? 0,
+            };
+            var orders = await _orderRepository.GetAllByInfoAsync(order, pageSize, offset);
             if (!orders.Success)
             {
                 response.Success = orders.Success;
@@ -53,13 +57,32 @@ namespace Meintasty.Application.Order
             if (orders.Value == null)
             {
                 response.Success = false;
-                response.ErrorMessage = "Sepet boş!";
+                response.ErrorMessage = "Sipariş yok!";
                 return await Task.FromResult(response);
             }
 
+            var itemCount = await _orderRepository.GetTotalCountAsync(UserSettings.UserId, request.RestaurantId ?? 0);
+            if (!itemCount.Success)
+            {
+                response.Success = itemCount.Success;
+                response.ErrorMessage = itemCount.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            int totalCount = itemCount.Value;
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            int? prevPage = request.PageNumber > 1 ? (int?)(request.PageNumber - 1) : null;
+            int? nextPage = request.PageNumber < totalPages ? (int?)(request.PageNumber + 1) : null;
+
             response.Success = true;
             response.InfoMessage = "Başarılı";
-            response.Value = _mapper.Map<List<GetOrderQueryResponse>>(orders.Value);
+            response.Value.Orders = _mapper.Map<List<GetOrderQueryContract>>(orders.Value);
+            response.Value.TotalCount = totalCount;
+            response.Value.TotalPages = totalPages;
+            response.Value.PrevPage = prevPage;
+            response.Value.CurrentPage = request.PageNumber;
+            response.Value.NextPage = nextPage;
 
             return await Task.FromResult(response);
         }

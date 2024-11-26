@@ -28,9 +28,9 @@ namespace Meintasty.ApiHost.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
         [HttpPost("getOrders")]
-        public async Task<GeneralResponse<List<GetOrderQueryResponse>>> GetOrders([FromBody] GetOrderQueryRequest request)
+        public async Task<GeneralResponse<GetOrderQueryResponse>> GetOrders([FromBody] GetOrderQueryRequest request)
         {
-            GeneralResponse<List<GetOrderQueryResponse>> response = await _mediator.Send(request);
+            GeneralResponse<GetOrderQueryResponse> response = await _mediator.Send(request);
             return response;
         }
 

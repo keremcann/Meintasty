@@ -141,7 +141,7 @@ namespace Meintasty.Data
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request)
+        public async Task<GeneralResponse<List<Order>>> GetAllByInfoAsync(Order request, int pagesize, int offset)
         {
             var data = new GeneralResponse<List<Order>>();
             data.Value = new List<Order>();
@@ -154,6 +154,8 @@ namespace Meintasty.Data
 
             string spName = string.Empty;
             var parameters = new DynamicParameters();
+            parameters.Add("@PageSize", pagesize);
+            parameters.Add("@Offset", offset);
 
             if (request.UserId != default(int) && request.UserId > 0) 
             {
@@ -175,7 +177,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Order>(spName, parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                var result = await connection.db.QueryAsync<Order>(spName, parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -225,6 +228,53 @@ namespace Meintasty.Data
                 data.ErrorMessage = ex.Message;
                 FileLog log = new FileLog();
                 log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        public async Task<GeneralResponse<Int32>> GetTotalCountAsync(int userId, int resId)
+        {
+            var data = new GeneralResponse<Int32>();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            string spName = string.Empty;
+            var parameters = new DynamicParameters();
+            if (userId != default(int) && userId > 0)
+            {
+                spName = "sel_OrderCountByUserId";
+                parameters.Add("@UserId", userId);
+            }
+            else if (userId != default(int) && userId > 0)
+            {
+                spName = "sel_OrderCountByRestaurantId";
+                parameters.Add("@RestaurantId", resId);
+            }
+            else
+            {
+                data.Success = false;
+                data.ErrorMessage = "Kişi veya Restaurant boş olamaz!";
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var result = await connection.db.QueryAsync<Int32>(spName, parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.FirstOrDefault();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
             }

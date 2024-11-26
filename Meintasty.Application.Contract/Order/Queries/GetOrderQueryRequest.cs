@@ -5,11 +5,13 @@ using System.Runtime.Serialization;
 namespace Meintasty.Application.Contract.Order.Queries
 {
     [DataContract]
-    public class GetOrderQueryRequest : IRequest<GeneralResponse<List<GetOrderQueryResponse>>>
+    public class GetOrderQueryRequest : IRequest<GeneralResponse<GetOrderQueryResponse>>
     {
+        //[DataMember]
+        //public int? UserId { get; set; }
         [DataMember]
-        public int UserId { get; set; }
+        public int? RestaurantId { get; set; }
         [DataMember]
-        public int RestaurantId { get; set; }
+        public int PageNumber { get; set; }
     }
 }

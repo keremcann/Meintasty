@@ -64,7 +64,7 @@ namespace Meintasty.Application
             #endregion
 
             #region Order
-            CreateMap<GetOrderQueryResponse, Domain.Entity.Order>().ReverseMap();
+            CreateMap<GetOrderQueryContract, Domain.Entity.Order>().ReverseMap();
             #endregion
 
             #region Home Restaurant Menu

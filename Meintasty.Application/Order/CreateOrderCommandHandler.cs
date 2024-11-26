@@ -2,6 +2,7 @@
 using Meintasty.Application.Contract.Order.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Order
 {
@@ -34,15 +35,15 @@ namespace Meintasty.Application.Order
 
             var order = await _orderRepository.AddAsync(new Domain.Entity.Order
             {
-                UserId = request.UserId,
+                UserId = UserSettings.UserId, //request.UserId,
                 RestaurantId = request.RestaurantId,
-                Name = request.UserId + "-" + request.RestaurantId + "-Order-" + DateTime.Now.ToString(),
+                Name = UserSettings.UserId + "-" + request.RestaurantId + "-Order-" + DateTime.Now.ToString(),
                 Price = request.Price,
                 CurrencyCode = request.CurrencyCode ?? "EUR",
                 PaymentType = request.PaymentType,
                 OrderTip = request.OrderTip ?? "0",
                 CreateDate = DateTime.UtcNow,
-                CreateUser = 1,
+                CreateUser = UserSettings.UserId, //1,
                 IsActive = true,
             });
 
