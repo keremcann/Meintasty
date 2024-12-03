@@ -2,6 +2,7 @@
 using Meintasty.Application.Contract.Basket.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Basket
 {
@@ -34,12 +35,12 @@ namespace Meintasty.Application.Basket
 
             var basket = await _basketRepository.AddAsync(new Domain.Entity.Basket
             {
-                UserId = request.UserId,
+                UserId = UserSettings.UserId,
                 RestaurantId = request.RestaurantId,
                 MenuId = request.MenuId,
-                Quantity = request.Quantity,
-                Price = request.Price.ToString(),
-                CurrencyCode = request.CurrencyCode ?? "EUR",
+                Quantity = request.Quantity ?? 1,
+                Price = request.Price,
+                CurrencyCode = request.CurrencyCode ?? "CHF",
                 BasketDate = DateTime.UtcNow,
                 CreateDate = DateTime.UtcNow,
                 CreateUser = 1,

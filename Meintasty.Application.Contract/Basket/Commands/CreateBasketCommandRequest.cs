@@ -8,17 +8,13 @@ namespace Meintasty.Application.Contract.Basket.Commands
     public class CreateBasketCommandRequest : IRequest<GeneralResponse<CreateBasketCommandResponse>>
     {
         [DataMember]
-        public int UserId { get; set; }
-        [DataMember]
         public int RestaurantId { get; set; }
         [DataMember]
         public int MenuId { get; set; }
         [DataMember]
-        public string? BasketDate { get; set; }
+        public int? Quantity { get; set; }
         [DataMember]
-        public int Quantity { get; set; }
-        [DataMember]
-        public double Price { get; set; }
+        public string? Price { get; set; }
         [DataMember]
         public string? CurrencyCode { get; set; }
     }
