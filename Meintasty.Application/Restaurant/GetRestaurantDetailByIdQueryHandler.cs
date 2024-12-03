@@ -86,6 +86,7 @@ namespace Meintasty.Application.Restaurant
             #endregion
 
             #region Mapper Objects
+            response.Value.RestaurantId = request.RestaurantId;
             response.Value = _mapper.Map<GetRestaurantDetailByIdQueryResponse>(restaurant.Value);
             response.Value.AddressList = _mapper.Map<List<RestaurantAddressContract>>(addressList.Value);
             response.Value.MenuList = _mapper.Map<List<RestaurantMenuContract>>(menuList.Value);

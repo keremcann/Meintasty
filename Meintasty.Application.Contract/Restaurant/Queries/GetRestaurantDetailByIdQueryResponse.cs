@@ -6,6 +6,8 @@ namespace Meintasty.Application.Contract.Restaurant.Queries
     public class GetRestaurantDetailByIdQueryResponse
     {
         [DataMember]
+        public int RestaurantId { get; set; }
+        [DataMember]
         public string? RestaurantName { get; set; }
         [DataMember]
         public string? Email { get; set; }
