@@ -8,9 +8,13 @@ namespace Meintasty.Application.Contract.Restaurant
         [DataMember]
         public int RestaurantId { get; set; }
         [DataMember]
-        public int MenuId { get; set; }
+        public int CategoryId { get; set; }
+        [DataMember]
+        public string? CategoryName { get; set; }
         [DataMember]
         public string? MenuName { get; set; }
+        [DataMember]
+        public string? MenuContent { get; set; }
         [DataMember]
         public double MenuPrice { get; set; }
         [DataMember]

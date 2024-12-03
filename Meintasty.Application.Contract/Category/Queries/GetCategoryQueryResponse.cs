@@ -9,5 +9,7 @@ namespace Meintasty.Application.Contract.Category.Queries
         public int Id { get; set; }
         [DataMember] 
         public string? CategoryName { get; set; }
+        [DataMember]
+        public int? RestaurantCount { get; set;}
     }
 }

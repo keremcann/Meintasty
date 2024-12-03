@@ -45,7 +45,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<RestaurantOrder>("sel_AllOrdersByRestaurantId", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                var result = await connection.db.QueryAsync<RestaurantOrder>("sel_AllOrdersByRestaurantId", parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);

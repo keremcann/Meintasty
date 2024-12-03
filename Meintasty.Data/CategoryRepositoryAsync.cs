@@ -76,7 +76,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Category>("sel_AllCategories", CommandType.StoredProcedure).Result.ToList();
+                var result = await connection.db.QueryAsync<Category>("sel_AllCategories", CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);

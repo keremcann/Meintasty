@@ -7,8 +7,10 @@ namespace Meintasty.Domain.Entity
     {
         public int Id { get; set; }
         public int RestaurantId { get; set; }
-        public int MenuId { get; set; }
+        public int CategoryId { get; set; }
+        public string? CategoryName { get; set; }
         public string? MenuName { get; set; }
+        public string? MenuContent { get; set; }
         public string? MenuPrice { get; set; }
         public string? Currency { get; set; }
         public byte[]? MenuPic { get; set; }

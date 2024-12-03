@@ -45,7 +45,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<RestaurantMenu>("sel_MenuByRestaurantId", parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+                var result = await connection.db.QueryAsync<RestaurantMenu>("sel_MenuByRestaurantId", parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -112,7 +113,7 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<RestaurantMenu>("sel_FavoriteMenus", commandType: CommandType.StoredProcedure).Result.ToList();
+                data.Value = connection.db.QueryAsync<RestaurantMenu>("sel_FavoriteMenus", commandType: CommandType.StoredProcedure).Result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
