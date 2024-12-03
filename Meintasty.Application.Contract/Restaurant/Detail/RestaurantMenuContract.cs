@@ -16,7 +16,7 @@ namespace Meintasty.Application.Contract.Restaurant
         [DataMember]
         public string? MenuContent { get; set; }
         [DataMember]
-        public double MenuPrice { get; set; }
+        public string? MenuPrice { get; set; }
         [DataMember]
         public string? Currency { get; set; }
         [DataMember]
