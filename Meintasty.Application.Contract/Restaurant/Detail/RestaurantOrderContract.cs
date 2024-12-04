@@ -8,8 +8,6 @@ namespace Meintasty.Application.Contract.Restaurant
         [DataMember]
         public int OrderId { get; set; }
         [DataMember]
-        public int RestaurantId { get; set; }
-        [DataMember]
         public DateTime? OrderDate { get; set; }
         [DataMember]
         public string? OrderPrice { get; set; }

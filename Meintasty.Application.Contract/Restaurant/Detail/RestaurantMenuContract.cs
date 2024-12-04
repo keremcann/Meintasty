@@ -6,9 +6,9 @@ namespace Meintasty.Application.Contract.Restaurant
     public class RestaurantMenuContract
     {
         [DataMember]
-        public int RestaurantId { get; set; }
-        [DataMember]
         public int CategoryId { get; set; }
+        [DataMember]
+        public int MenuId { get; set; }
         [DataMember]
         public string? CategoryName { get; set; }
         [DataMember]

@@ -6,8 +6,6 @@ namespace Meintasty.Application.Contract.Restaurant
     public class RestaurantAddressContract
     {
         [DataMember]
-        public int RestaurantId { get; set; }
-        [DataMember]
         public int AddressId { get; set; }
         [DataMember]
         public string? AddressName { get; set; }
