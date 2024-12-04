@@ -59,6 +59,20 @@ namespace Meintasty.Application.Basket
             response.InfoMessage = "Başarılı";
             response.Value = _mapper.Map<List<GetBasketQueryResponse>>(baskets.Value);
 
+            var list = new List<GetBasketQueryResponse>();
+            var basketList = response.Value.GroupBy(x => x.MenuId).ToList();
+            foreach (var item in basketList)
+            {
+                var basketItem = new GetBasketQueryResponse();
+                basketItem = item.FirstOrDefault();
+                basketItem.Quantity = item.Count();
+                //basketItem.Price = (Convert.ToDouble(basketItem.Price) * basketItem.Quantity).ToString();
+                list.Add(basketItem);
+            }
+
+            response.Value = new List<GetBasketQueryResponse>();
+            response.Value = list;
+
             return await Task.FromResult(response);
         }
     }
