@@ -36,7 +36,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_AllRestaurants", CommandType.StoredProcedure).Result.ToList();
+                var result = await connection.db.QueryAsync<Restaurant>("sel_AllRestaurants", CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -202,7 +203,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Restaurant>("sel_RestaurantById", parameters, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                var result = await connection.db.QueryAsync<Restaurant>("sel_RestaurantById", parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result?.FirstOrDefault();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -235,6 +237,45 @@ namespace Meintasty.Data
             {
                 var result = await connection.db.QueryAsync<Restaurant>("sel_FavotireRestaurants", CommandType.StoredProcedure);
                 data.Value = result.ToList();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<Restaurant>> GetRestaurantByInfoAsync(string email, string password)
+        {
+            var data = new GeneralResponse<Restaurant>();
+            data.Value = new Restaurant();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@Email", email);
+            parameters.Add("Password", password);
+
+            try
+            {
+                var result = await connection.db.QueryAsync<Restaurant>("sel_RestaurantByLoginInfo", parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.FirstOrDefault();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);

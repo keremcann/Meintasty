@@ -44,5 +44,12 @@ namespace Meintasty.Domain.Repository
         /// <returns></returns>
         Task<GeneralResponse<Int32>> GetTotalCountAsync(int cityId, List<int>? categoryIdList);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Restaurant>> GetRestaurantByInfoAsync(string email, string password);
     }
 }

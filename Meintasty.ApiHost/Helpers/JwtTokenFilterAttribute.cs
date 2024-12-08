@@ -42,8 +42,9 @@ namespace Meintasty.ApiHost.Helpers
             }
 
             var userId = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.SerialNumber)?.Value;
-            
+            var restId = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
             UserSettings.UserId = Convert.ToInt32(userId);
+            UserSettings.RestId = Convert.ToInt32(restId);
 
             // Kullanıcı bilgilerini başka bir yere taşıyabilir veya loglama yapabilirsiniz
             context.HttpContext.Items["UserId"] = userId;

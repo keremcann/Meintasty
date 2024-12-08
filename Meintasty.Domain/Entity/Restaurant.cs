@@ -7,6 +7,7 @@ namespace Meintasty.Domain.Entity
     {
         public int Id { get; set; }
         public string? RestaurantName { get; set; }
+        public string? FullName { get; set; }
         public string? Url { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }

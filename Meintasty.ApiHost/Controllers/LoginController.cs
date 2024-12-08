@@ -38,5 +38,27 @@ namespace Meintasty.ApiHost.Controllers
             }
             return response;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("RestLogin")]
+        public async Task<GeneralResponse<GetRestLoginQueryResponse>> RestLogin([FromBody] GetRestLoginQueryRequest request)
+        {
+            GeneralResponse<GetRestLoginQueryResponse> response = await _mediator.Send(request);
+            if (response.Success)
+            {
+                request.FullName = response.Value.FullName;
+                request.RestaurantId = response.Value.RestaurantId;
+                request.Url = response.Value.Url;
+                request.PhoneNumber = response.Value.PhoneNumber;
+                string token = MeinTastyHelper.CreateToken(request, response.Value.RoleList);
+                response.Value.Token = token;
+            }
+            return response;
+        }
     }
 }
