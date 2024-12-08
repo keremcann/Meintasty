@@ -29,7 +29,7 @@ namespace Meintasty.Data
 
             try
             {
-                var basket = connection?.db?.QueryAsync<Int32>("ins_NewRestaurantMenu", new
+                var result = await connection.db.QueryAsync<Int32>("ins_NewRestaurantMenu", new
                 {
                     request.Id,
                     request.RestaurantId,
@@ -42,8 +42,9 @@ namespace Meintasty.Data
                     request.CreateUser,
                     request.CreateDate,
                     request.IsActive
-                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                }, commandType: CommandType.StoredProcedure);
 
+                data.Value.Id = result.FirstOrDefault();
                 data.Success = true;
                 data.InfoMessage = "Menü eklendi!";
 
@@ -80,7 +81,7 @@ namespace Meintasty.Data
 
             try
             {
-                var basket = connection?.db?.QueryAsync<Int32>("del_RestaurantMenu", new
+                var result = await connection.db.QueryAsync<Int32>("del_RestaurantMenu", new
                 {
                     request.Id,
                     request.RestaurantId,
@@ -93,8 +94,9 @@ namespace Meintasty.Data
                     request.DeleteUser,
                     request.DeleteDate,
                     request.IsActive
-                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                }, commandType: CommandType.StoredProcedure);
 
+                data.Value.Id = result.FirstOrDefault();
                 data.Success = true;
                 data.InfoMessage = "Menü silindi!";
 
@@ -239,7 +241,7 @@ namespace Meintasty.Data
 
             try
             {
-                var basket = connection?.db?.QueryAsync<Int32>("upd_RestaurantMenu", new
+                var result = await connection.db.QueryAsync<Int32>("upd_RestaurantMenu", new
                 {
                     request.Id,
                     request.RestaurantId,
@@ -252,8 +254,9 @@ namespace Meintasty.Data
                     request.UpdateUser,
                     request.UpdateDate,
                     request.IsActive
-                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                }, commandType: CommandType.StoredProcedure);
 
+                data.Value.Id = result.FirstOrDefault();
                 data.Success = true;
                 data.InfoMessage = "Menü güncellendi!";
 
