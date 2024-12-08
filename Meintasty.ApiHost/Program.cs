@@ -93,6 +93,7 @@ builder.Services.AddScoped<IRestaurantOrderRepositoryAsync, RestaurantOrderRepos
 builder.Services.AddScoped<IUserAddressRepositoryAsync, UserAddressRepositoryAsync>();
 builder.Services.AddScoped<IUserRoleRepositoryAsync, UserRoleRepositoryAsync>();
 builder.Services.AddScoped<ICategoryRepositoryAsync, CategoryRepositoryAsync>();
+builder.Services.AddScoped<IPaymentRepositoryAsync, PaymentRepositoryAsync>();
 
 #endregion
 
