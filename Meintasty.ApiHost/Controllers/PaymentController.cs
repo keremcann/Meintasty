@@ -3,7 +3,6 @@ using Meintasty.ApiHost.Helpers;
 using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Core.Common;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Meintasty.ApiHost.Controllers

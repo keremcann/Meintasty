@@ -5,6 +5,7 @@ using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Category.Queries;
 using Meintasty.Application.Contract.City.Queries;
 using Meintasty.Application.Contract.Home.Queries;
+using Meintasty.Application.Contract.Menu.Commands;
 using Meintasty.Application.Contract.Order.Queries;
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Application.Contract.Restaurant;
@@ -53,6 +54,9 @@ namespace Meintasty.Application
 
             #region Restaurant Menu
             CreateMap<RestaurantMenuContract, RestaurantMenu>().ReverseMap();
+            CreateMap<CreateMenuCommandResponse, RestaurantMenu>().ReverseMap();
+            CreateMap<UpdateMenuCommandResponse, RestaurantMenu>().ReverseMap();
+            CreateMap<DeleteMenuCommandResponse, RestaurantMenu>().ReverseMap();
             #endregion
 
             #region Restaurant Order

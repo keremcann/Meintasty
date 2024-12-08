@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Meintasty.Core.Common;
 using Meintasty.Core.Connection;
+using Meintasty.Core.Log;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 using System.Data;
@@ -9,14 +10,106 @@ namespace Meintasty.Data
 {
     public class RestaurantMenuRepositoryAsync : MeintastyDbConnection, IRestaurantMenuRepositoryAsync
     {
-        public Task<GeneralResponse<RestaurantMenu>> AddAsync(RestaurantMenu request)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<RestaurantMenu>> AddAsync(RestaurantMenu request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<RestaurantMenu>();
+            data.Value = new RestaurantMenu();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var basket = connection?.db?.QueryAsync<Int32>("ins_NewRestaurantMenu", new
+                {
+                    request.Id,
+                    request.RestaurantId,
+                    request.CategoryId,
+                    request.MenuName,
+                    request.MenuPic,
+                    request.MenuContent,
+                    request.MenuPrice,
+                    request.Currency,
+                    request.CreateUser,
+                    request.CreateDate,
+                    request.IsActive
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Menü eklendi!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
 
-        public Task<GeneralResponse<RestaurantMenu>> DeleteAsync(RestaurantMenu request)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<RestaurantMenu>> DeleteAsync(RestaurantMenu request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<RestaurantMenu>();
+            data.Value = new RestaurantMenu();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var basket = connection?.db?.QueryAsync<Int32>("del_RestaurantMenu", new
+                {
+                    request.Id,
+                    request.RestaurantId,
+                    request.CategoryId,
+                    request.MenuName,
+                    request.MenuPic,
+                    request.MenuContent,
+                    request.MenuPrice,
+                    request.Currency,
+                    request.DeleteUser,
+                    request.DeleteDate,
+                    request.IsActive
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Menü silindi!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
 
         public Task<GeneralResponse<List<RestaurantMenu>>> GetAllAsync()
@@ -127,9 +220,55 @@ namespace Meintasty.Data
             }
         }
 
-        public Task<GeneralResponse<RestaurantMenu>> UpdateAsync(RestaurantMenu request)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<RestaurantMenu>> UpdateAsync(RestaurantMenu request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<RestaurantMenu>();
+            data.Value = new RestaurantMenu();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var basket = connection?.db?.QueryAsync<Int32>("upd_RestaurantMenu", new
+                {
+                    request.Id,
+                    request.RestaurantId,
+                    request.CategoryId,
+                    request.MenuName,
+                    request.MenuPic,
+                    request.MenuContent,
+                    request.MenuPrice,
+                    request.Currency,
+                    request.UpdateUser,
+                    request.UpdateDate,
+                    request.IsActive
+                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+
+                data.Success = true;
+                data.InfoMessage = "Menü güncellendi!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
     }
 }
