@@ -45,7 +45,7 @@ namespace Meintasty.Application.Order
             Domain.Entity.Order order = new Domain.Entity.Order()
             {
                 UserId = UserSettings.UserId,
-                RestaurantId = request.RestaurantId ?? 0,
+                RestaurantId = UserSettings.RestId //request.RestaurantId ?? 0,
             };
             var orders = await _orderRepository.GetAllByInfoAsync(order, pageSize, offset);
             if (!orders.Success)

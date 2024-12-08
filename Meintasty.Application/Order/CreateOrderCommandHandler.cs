@@ -42,6 +42,7 @@ namespace Meintasty.Application.Order
                 CurrencyCode = request.CurrencyCode ?? "EUR",
                 PaymentType = request.PaymentType,
                 OrderTip = request.OrderTip ?? "0",
+                OrderStatus = "Pending",
                 CreateDate = DateTime.UtcNow,
                 CreateUser = UserSettings.UserId, //1,
                 IsActive = true,

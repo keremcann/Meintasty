@@ -38,6 +38,7 @@ namespace Meintasty.Data
                     request.CurrencyCode,
                     request.PaymentType,
                     request.OrderTip,
+                    request.OrderStatus,
                     request.CreateUser,
                     request.CreateDate,
                     request.IsActive
@@ -299,9 +300,10 @@ namespace Meintasty.Data
 
             try
             {
-                var order = connection?.db?.QueryAsync<Int32>("upd_Order", new
+                var order = connection?.db?.QueryAsync<Int32>("upd_OrderStatus", new
                 {
                     request.Id,
+                    request.OrderStatus,
                     request.UpdateUser,
                     request.UpdateDate
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();

@@ -14,6 +14,7 @@ namespace Meintasty.Domain.Entity
         public string? CurrencyCode { get; set; }
         public string? PaymentType { get; set; }
         public string? OrderTip { get; set; }
+        public string? OrderStatus { get; set; }
         public int CreateUser { get; set; }
         public DateTime CreateDate { get; set; }
         public int? UpdateUser { get; set; }
