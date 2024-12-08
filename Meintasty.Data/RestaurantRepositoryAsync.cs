@@ -292,6 +292,42 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<Restaurant>> GetRestaurantDetailByInfoAsync(string url)
+        {
+            var data = new GeneralResponse<Restaurant>();
+            data.Value = new Restaurant();
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@Url", url);
+
+            try
+            {
+                var result = await connection.db.QueryAsync<Restaurant>("sel_RestaurantByUrl", parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result?.FirstOrDefault();
+                data.Success = true;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="cityId"></param>
         /// <param name="categoryIdList"></param>
         /// <returns></returns>

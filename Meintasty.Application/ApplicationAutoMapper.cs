@@ -39,6 +39,10 @@ namespace Meintasty.Application
             CreateMap<GetRestaurantDetailByIdQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
             #endregion
 
+            #region Restaurant By Info
+            CreateMap<GetRestaurantDetailByInfoQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
+            #endregion
+
             #region Favorite Restaurant
             CreateMap<GetFavoriteRestaurantQueryResponse, Domain.Entity.Restaurant>().ReverseMap();
             #endregion

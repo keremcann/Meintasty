@@ -48,5 +48,18 @@ namespace Meintasty.ApiHost.Controllers
             GeneralResponse<GetRestaurantDetailByIdQueryResponse> response = await _mediator.Send(request);
             return response;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost("getRestaurantDetailByInfo")]
+        public async Task<GeneralResponse<GetRestaurantDetailByInfoQueryResponse>> GetRestaurantDetailByInfo([FromBody] GetRestaurantDetailByInfoQueryRequest request)
+        {
+            GeneralResponse<GetRestaurantDetailByInfoQueryResponse> response = await _mediator.Send(request);
+            return response;
+        }
     }
 }
