@@ -17,5 +17,7 @@ namespace Meintasty.Application.Contract.Basket.Commands
         public string? Price { get; set; }
         [DataMember]
         public string? CurrencyCode { get; set; }
+        [DataMember]
+        public bool? IsReplaceBasket { get; set; }
     }
 }

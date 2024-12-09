@@ -207,11 +207,13 @@ namespace Meintasty.Data
 
             try
             {
-                var basket = connection?.db?.QueryAsync<Int32>("sel_BasketById", new
+                var basket = await connection.db.QueryAsync<Basket>("sel_BasketById", new
                 {
-                    request.Id
-                }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
+                    request.Id,
+                    request.UserId
+                }, commandType: CommandType.StoredProcedure);
 
+                data.Value = basket?.FirstOrDefault() ?? new Basket();
                 data.Success = true;
                 data.InfoMessage = "Sepet item ok!";
 
@@ -250,8 +252,10 @@ namespace Meintasty.Data
             {
                 var basket = connection?.db?.QueryAsync<Int32>("upd_Basket", new
                 {
-                    request.Id,
+                    request.MenuId,
                     request.Quantity,
+                    request.Price,
+                    request.UserId,
                     request.UpdateUser,
                     request.UpdateDate
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();
