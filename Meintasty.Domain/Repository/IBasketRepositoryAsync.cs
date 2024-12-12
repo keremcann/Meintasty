@@ -12,5 +12,12 @@ namespace Meintasty.Domain.Repository
         /// <param name="request"></param>
         /// <returns></returns>
         Task<GeneralResponse<List<Basket>>> GetAllByInfoAsync(Basket request);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<GeneralResponse<Basket>> DeleteAllByUserIdAsync(int userId);
     }
 }

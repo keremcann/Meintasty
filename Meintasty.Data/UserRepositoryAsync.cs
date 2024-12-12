@@ -238,9 +238,8 @@ namespace Meintasty.Data
                 {
                     request.Id,
                     request.FullName,
-                    request.Email,
-                    request.PhoneNumber,
                     request.Gender,
+                    request.BirthDate,
                     request.UpdateUser,
                     request.UpdateDate,
                 }, commandType: CommandType.StoredProcedure).Result.FirstOrDefault();

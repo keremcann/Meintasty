@@ -5,6 +5,7 @@ using Meintasty.Application.Contract.User.Queries;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.User
 {
@@ -39,7 +40,7 @@ namespace Meintasty.Application.User
             var response = new GeneralResponse<GetUserQueryResponse>();
             response.Value = new GetUserQueryResponse();
 
-            var user = await _userRepository.GetByIdAsync(request.UserId);
+            var user = await _userRepository.GetByIdAsync(UserSettings.UserId);
 
             if (!user.Success)
             {
@@ -54,7 +55,7 @@ namespace Meintasty.Application.User
                 return await Task.FromResult(response);
             }
 
-            var address = await _userAddressRepository.GetAsync(new UserAddress { UserId = request.UserId });
+            var address = await _userAddressRepository.GetAsync(new UserAddress { UserId = UserSettings.UserId });
             if (!address.Success)
             {
                 response.Success = address.Success;

@@ -63,6 +63,45 @@ namespace Meintasty.Data
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<Basket>> DeleteAllByUserIdAsync(int userId)
+        {
+            var data = new GeneralResponse<Basket>();
+            data.Value = new Basket();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", userId);
+            try
+            {
+                var basket = await connection.db.QueryAsync<Int32>("del_BasketByUserId", parameters, commandType: CommandType.StoredProcedure);
+                data.Value.Id = basket.FirstOrDefault();
+                data.Success = true;
+                data.InfoMessage = "Sepetten silindi!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         public async Task<GeneralResponse<Basket>> DeleteAsync(Basket request)
@@ -174,7 +213,8 @@ namespace Meintasty.Data
 
             try
             {
-                data.Value = connection?.db?.QueryAsync<Basket>(spName, parameters, commandType: CommandType.StoredProcedure).Result.ToList();
+               var result = await connection.db.QueryAsync<Basket>(spName, parameters, commandType: CommandType.StoredProcedure);
+                data.Value = result.ToList();
                 data.Success = true;
                 connection?.db?.Close();
                 return await Task.FromResult(data);
@@ -209,7 +249,7 @@ namespace Meintasty.Data
             {
                 var basket = await connection.db.QueryAsync<Basket>("sel_BasketById", new
                 {
-                    request.Id,
+                    request.MenuId,
                     request.UserId
                 }, commandType: CommandType.StoredProcedure);
 
