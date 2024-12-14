@@ -4,12 +4,14 @@ using Meintasty.Application.Contract.Basket.Queries;
 using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Category.Queries;
 using Meintasty.Application.Contract.City.Queries;
+using Meintasty.Application.Contract.Delivery.Queries;
 using Meintasty.Application.Contract.Home.Queries;
 using Meintasty.Application.Contract.Menu.Commands;
 using Meintasty.Application.Contract.Order.Queries;
 using Meintasty.Application.Contract.Register.Commands;
 using Meintasty.Application.Contract.Restaurant;
 using Meintasty.Application.Contract.Restaurant.Queries;
+using Meintasty.Application.Contract.Tax.Queries;
 using Meintasty.Application.Contract.User.Queries;
 using Meintasty.Domain.Entity;
 
@@ -85,6 +87,14 @@ namespace Meintasty.Application
 
             #region Category
             CreateMap<GetCategoryQueryResponse, Domain.Entity.Category>().ReverseMap();
+            #endregion
+
+            #region Tax
+            CreateMap<GetTaxQueryResponse, Domain.Entity.Tax>().ReverseMap();
+            #endregion
+
+            #region Delivery
+            CreateMap<GetDeliveryQueryResponse, Domain.Entity.Delivery>().ReverseMap();
             #endregion
         }
     }

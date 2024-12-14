@@ -94,6 +94,8 @@ builder.Services.AddScoped<IUserAddressRepositoryAsync, UserAddressRepositoryAsy
 builder.Services.AddScoped<IUserRoleRepositoryAsync, UserRoleRepositoryAsync>();
 builder.Services.AddScoped<ICategoryRepositoryAsync, CategoryRepositoryAsync>();
 builder.Services.AddScoped<IPaymentRepositoryAsync, PaymentRepositoryAsync>();
+builder.Services.AddScoped<IDeliveryRepositoryAsync, DeliveryRepositoryAsync>();
+builder.Services.AddScoped<ITaxRepositoryAsync, TaxRepositoryAsync>();
 
 #endregion
 

@@ -7,5 +7,7 @@ namespace Meintasty.Application.Contract.Delivery.Queries
     [DataContract]
     public class GetDeliveryQueryRequest : IRequest<GeneralResponse<GetDeliveryQueryResponse>>
     {
+        [DataMember]
+        public int DeliveryId { get; set; }
     }
 }

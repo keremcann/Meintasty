@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using Meintasty.Application.Contract.Canton.Queries;
 using Meintasty.Application.Contract.Tax.Queries;
 using Meintasty.Core.Common;
+using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Tax
@@ -35,6 +37,24 @@ namespace Meintasty.Application.Tax
         {
             var response = new GeneralResponse<GetTaxQueryResponse>();
             response.Value = new GetTaxQueryResponse();
+
+            var tax = await _taxRepository.GetAsync(new Domain.Entity.Tax { Id = request.TaxId });
+            if (!tax.Success)
+            {
+                response.Success = tax.Success;
+                response.ErrorMessage = tax.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+            if (tax.Value == null)
+            {
+                response.Success = false;
+                response.ErrorMessage = "Not found Tax!";
+                return await Task.FromResult(response);
+            }
+
+            response.Value = _mapper.Map<GetTaxQueryResponse>(tax.Value);
+            response.Success = true;
+            response.InfoMessage = "Getting successfully";
 
             return await Task.FromResult(response);
         }
