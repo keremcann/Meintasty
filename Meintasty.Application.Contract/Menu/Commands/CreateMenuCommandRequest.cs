@@ -8,10 +8,6 @@ namespace Meintasty.Application.Contract.Menu.Commands
     public class CreateMenuCommandRequest : IRequest<GeneralResponse<CreateMenuCommandResponse>>
     {
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
-        public int RestaurantId { get; set; }
-        [DataMember]
         public int CategoryId { get; set; }
         [DataMember]
         public string? MenuName { get; set; }

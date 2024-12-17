@@ -31,7 +31,6 @@ namespace Meintasty.Data
             {
                 var result = await connection.db.QueryAsync<Int32>("ins_NewRestaurantMenu", new
                 {
-                    request.Id,
                     request.RestaurantId,
                     request.CategoryId,
                     request.MenuName,
@@ -241,7 +240,7 @@ namespace Meintasty.Data
 
             try
             {
-                var result = await connection.db.QueryAsync<Int32>("upd_RestaurantMenu", new
+                var result = await connection.db.QueryAsync<Int32>("upd_RestaurantMenuById", new
                 {
                     request.Id,
                     request.RestaurantId,

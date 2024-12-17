@@ -4,6 +4,7 @@ using Meintasty.Application.Contract.Menu.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Menu
 {
@@ -39,14 +40,13 @@ namespace Meintasty.Application.Menu
 
             var result = await _restaurantMenuRepository.AddAsync(new RestaurantMenu
             {
-                Id = request.Id,
-                RestaurantId = request.RestaurantId,
+                RestaurantId = UserSettings.RestId,
                 CategoryId = request.CategoryId,
                 MenuName = request.MenuName,
                 MenuPic = request.MenuPic,
                 MenuContent = request.MenuContent,
                 MenuPrice = request.MenuPrice,
-                Currency = request.Currency,
+                Currency = request.Currency ?? "CHF",
                 CreateUser = 1,
                 CreateDate = DateTime.UtcNow,
                 IsActive = true,
