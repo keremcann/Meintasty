@@ -4,6 +4,7 @@ using Meintasty.Application.Contract.Menu.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Menu
 {
@@ -40,7 +41,7 @@ namespace Meintasty.Application.Menu
             var result = await _restaurantMenuRepository.UpdateAsync(new RestaurantMenu
             {
                 Id = request.Id,
-                RestaurantId = request.RestaurantId,
+                RestaurantId = UserSettings.RestId, // request.RestaurantId,
                 CategoryId = request.CategoryId,
                 MenuName = request.MenuName,
                 MenuPic = request.MenuPic,
@@ -58,7 +59,9 @@ namespace Meintasty.Application.Menu
                 return await Task.FromResult(response);
             }
 
-            response.Value = _mapper.Map<UpdateMenuCommandResponse>(result.Value);
+            //response.Value = _mapper.Map<UpdateMenuCommandResponse>(result.Value);
+            response.Success = true;
+            response.InfoMessage = result.InfoMessage;
 
             return await Task.FromResult(response);
         }

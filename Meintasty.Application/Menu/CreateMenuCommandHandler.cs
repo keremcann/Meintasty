@@ -59,7 +59,9 @@ namespace Meintasty.Application.Menu
                 return await Task.FromResult(response);
             }
 
-            response.Value = _mapper.Map<CreateMenuCommandResponse>(result.Value);
+            //response.Value = _mapper.Map<CreateMenuCommandResponse>(result.Value);
+            response.Success = true;
+            response.InfoMessage = result.InfoMessage;
 
             return await Task.FromResult(response);
         }
