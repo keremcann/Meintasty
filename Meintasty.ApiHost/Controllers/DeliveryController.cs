@@ -46,5 +46,18 @@ namespace Meintasty.ApiHost.Controllers
             GeneralResponse<CreateDeliveryCommandResponse> response = await _mediator.Send(request);
             return response;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin,Member")]
+        [HttpPost("addOrderDelivery")]
+        public async Task<GeneralResponse<CreateOrderDeliveryCommandResponse>> AddOrderDelivery([FromBody] CreateOrderDeliveryCommandRequest request)
+        {
+            GeneralResponse<CreateOrderDeliveryCommandResponse> response = await _mediator.Send(request);
+            return response;
+        }
     }
 }

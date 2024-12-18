@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿//using AutoMapper;
 using MediatR;
 using Meintasty.Application.Contract.Delivery.Commands;
 using Meintasty.Core.Common;
@@ -11,7 +11,7 @@ namespace Meintasty.Application.Delivery
         /// <summary>
         /// 
         /// </summary>
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         private readonly IDeliveryRepositoryAsync _deliveryRepository;
 
         /// <summary>
@@ -19,9 +19,9 @@ namespace Meintasty.Application.Delivery
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="deliveryRepository"></param>
-        public CreateDeliveryCommandHandler(IMapper mapper, IDeliveryRepositoryAsync deliveryRepository)
+        public CreateDeliveryCommandHandler(/*IMapper mapper,*/ IDeliveryRepositoryAsync deliveryRepository)
         {
-            _mapper = mapper;
+            //_mapper = mapper;
             _deliveryRepository = deliveryRepository;
         }
 
@@ -35,6 +35,29 @@ namespace Meintasty.Application.Delivery
         {
             var response = new GeneralResponse<CreateDeliveryCommandResponse>();
             response.Value = new CreateDeliveryCommandResponse();
+
+            var result = await _deliveryRepository.AddAsync(new Domain.Entity.Delivery
+            {
+                MinAmount = request.MinAmount,
+                MaxAmount = request.MaxAmount,
+                MinDistance = request.MinDistance,
+                MaxDistance = request.MaxDistance,
+                IsFree = request.IsFree,
+                Currency = request.Currency,
+                Description = request.Description,
+                CreateUser = 1,
+                CreateDate = DateTime.UtcNow,
+                IsActive = true
+            });
+            if (!result.Success)
+            {
+                response.Success = false;
+                response.ErrorMessage = result.ErrorMessage;
+                return await Task.FromResult(response);
+            }
+
+            response.Success = true;
+            response.InfoMessage = result.InfoMessage;
 
             return await Task.FromResult(response);
         }

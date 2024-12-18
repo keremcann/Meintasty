@@ -10,9 +10,55 @@ namespace Meintasty.Data
 {
     public class DeliveryRepositoryAsync : MeintastyDbConnection, IDeliveryRepositoryAsync
     {
-        public Task<GeneralResponse<Delivery>> AddAsync(Delivery request)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<GeneralResponse<Delivery>> AddAsync(Delivery request)
         {
-            throw new NotImplementedException();
+            var data = new GeneralResponse<Delivery>();
+            data.Value = new Delivery();
+
+            if (!connection.Success)
+            {
+                data.Success = false;
+                data.ErrorMessage = connection.ErrorMessage;
+                return await Task.FromResult(data);
+            }
+
+            try
+            {
+                var delivery = await connection.db.QueryAsync<Int32>("ins_NewDelivery", new
+                {
+                    request.MinAmount,
+                    request.MaxAmount,
+                    request.MinDistance,
+                    request.MaxDistance,
+                    request.IsFree,
+                    request.Currency,
+                    request.Description,
+                    request.CreateUser,
+                    request.CreateDate,
+                    request.IsActive
+                }, commandType: CommandType.StoredProcedure);
+
+                data.Value.Id = delivery.FirstOrDefault();
+                data.Success = true;
+                data.InfoMessage = "Teslimat oluşturuldu!";
+
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
+            catch (Exception ex)
+            {
+                data.Success = false;
+                data.ErrorMessage = ex.Message;
+                FileLog log = new FileLog();
+                log.Error(ex.Message);
+                connection?.db?.Close();
+                return await Task.FromResult(data);
+            }
         }
 
         public Task<GeneralResponse<Delivery>> DeleteAsync(Delivery request)
