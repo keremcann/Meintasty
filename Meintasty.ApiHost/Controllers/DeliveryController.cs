@@ -27,10 +27,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
-        [HttpPost("getDeliveryById")]
-        public async Task<GeneralResponse<GetDeliveryQueryResponse>> GetDeliveryById([FromBody] GetDeliveryQueryRequest request)
+        [HttpPost("getDelivery")]
+        public async Task<GeneralResponse<List<GetDeliveryQueryResponse>>> GetDelivery([FromBody] GetDeliveryQueryRequest request)
         {
-            GeneralResponse<GetDeliveryQueryResponse> response = await _mediator.Send(request);
+            GeneralResponse<List<GetDeliveryQueryResponse>> response = await _mediator.Send(request);
             return response;
         }
 

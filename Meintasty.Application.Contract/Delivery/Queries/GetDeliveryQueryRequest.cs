@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 namespace Meintasty.Application.Contract.Delivery.Queries
 {
     [DataContract]
-    public class GetDeliveryQueryRequest : IRequest<GeneralResponse<GetDeliveryQueryResponse>>
+    public class GetDeliveryQueryRequest : IRequest<GeneralResponse<List<GetDeliveryQueryResponse>>>
     {
         [DataMember]
-        public int DeliveryId { get; set; }
+        public int? DeliveryId { get; set; }
     }
 }
