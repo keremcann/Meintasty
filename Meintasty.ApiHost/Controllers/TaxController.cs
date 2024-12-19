@@ -27,10 +27,10 @@ namespace Meintasty.ApiHost.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [Authorize(Roles = "Admin,Member")]
-        [HttpPost("getTaxById")]
-        public async Task<GeneralResponse<GetTaxQueryResponse>> GetTaxById([FromBody] GetTaxQueryRequest request)
+        [HttpPost("getTaxes")]
+        public async Task<GeneralResponse<List<GetTaxQueryResponse>>> GetTaxes([FromBody] GetTaxQueryRequest request)
         {
-            GeneralResponse<GetTaxQueryResponse> response = await _mediator.Send(request);
+            GeneralResponse<List<GetTaxQueryResponse>> response = await _mediator.Send(request);
             return response;
         }
 

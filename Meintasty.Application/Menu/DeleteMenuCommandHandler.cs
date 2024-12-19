@@ -4,6 +4,7 @@ using Meintasty.Application.Contract.Menu.Commands;
 using Meintasty.Core.Common;
 using Meintasty.Domain.Entity;
 using Meintasty.Domain.Repository;
+using Meintasty.Domain.Shared.Globals;
 
 namespace Meintasty.Application.Menu
 {
@@ -40,7 +41,7 @@ namespace Meintasty.Application.Menu
             var result = await _restaurantMenuRepository.DeleteAsync(new RestaurantMenu
             {
                 Id = request.Id,
-                DeleteUser = 1,
+                DeleteUser = UserSettings.RestId,
                 DeleteDate = DateTime.UtcNow,
             });
 
@@ -52,6 +53,8 @@ namespace Meintasty.Application.Menu
             }
 
             response.Value = _mapper.Map<DeleteMenuCommandResponse>(result.Value);
+            response.Success = true;
+            response.InfoMessage = result.InfoMessage;
 
             return await Task.FromResult(response);
         }

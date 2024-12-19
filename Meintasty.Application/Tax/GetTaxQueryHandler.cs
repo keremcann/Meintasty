@@ -8,7 +8,7 @@ using Meintasty.Domain.Repository;
 
 namespace Meintasty.Application.Tax
 {
-    public class GetTaxQueryHandler : IRequestHandler<GetTaxQueryRequest, GeneralResponse<GetTaxQueryResponse>>
+    public class GetTaxQueryHandler : IRequestHandler<GetTaxQueryRequest, GeneralResponse<List<GetTaxQueryResponse>>>
     {
         /// <summary>
         /// 
@@ -33,28 +33,52 @@ namespace Meintasty.Application.Tax
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<GeneralResponse<GetTaxQueryResponse>> Handle(GetTaxQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<List<GetTaxQueryResponse>>> Handle(GetTaxQueryRequest request, CancellationToken cancellationToken)
         {
-            var response = new GeneralResponse<GetTaxQueryResponse>();
-            response.Value = new GetTaxQueryResponse();
+            var response = new GeneralResponse<List<GetTaxQueryResponse>>();
+            response.Value = new List<GetTaxQueryResponse>();
 
-            var tax = await _taxRepository.GetAsync(new Domain.Entity.Tax { Id = request.TaxId });
-            if (!tax.Success)
+            if (request.TaxId == null || request.TaxId == 0) 
             {
-                response.Success = tax.Success;
-                response.ErrorMessage = tax.ErrorMessage;
-                return await Task.FromResult(response);
+                var taxes = await _taxRepository.GetAllAsync();
+                if (!taxes.Success)
+                {
+                    response.Success = taxes.Success;
+                    response.ErrorMessage = taxes.ErrorMessage;
+                    return await Task.FromResult(response);
+                }
+                if (taxes.Value == null)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Not found Tax!";
+                    return await Task.FromResult(response);
+                }
+                response.Value = _mapper.Map<List<GetTaxQueryResponse>>(taxes.Value);
+                response.Success = true;
+                response.InfoMessage = "Getting successfully";
             }
-            if (tax.Value == null)
+            else
             {
-                response.Success = false;
-                response.ErrorMessage = "Not found Tax!";
-                return await Task.FromResult(response);
+                var tax = await _taxRepository.GetAsync(new Domain.Entity.Tax { Id = Convert.ToInt32(request.TaxId) });
+                if (!tax.Success)
+                {
+                    response.Success = tax.Success;
+                    response.ErrorMessage = tax.ErrorMessage;
+                    return await Task.FromResult(response);
+                }
+                if (tax.Value == null)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Not found Tax!";
+                    return await Task.FromResult(response);
+                }
+                var item = new GetTaxQueryResponse();
+                item = _mapper.Map<GetTaxQueryResponse>(tax.Value);
+                //response.Value = _mapper.Map<List<GetTaxQueryResponse>>(tax.Value);
+                response.Value.Add(item);
+                response.Success = true;
+                response.InfoMessage = "Getting successfully";
             }
-
-            response.Value = _mapper.Map<GetTaxQueryResponse>(tax.Value);
-            response.Success = true;
-            response.InfoMessage = "Getting successfully";
 
             return await Task.FromResult(response);
         }

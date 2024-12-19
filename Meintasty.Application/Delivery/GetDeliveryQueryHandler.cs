@@ -73,7 +73,7 @@ namespace Meintasty.Application.Delivery
                     response.ErrorMessage = "Not found delivery!";
                     return await Task.FromResult(response);
                 }
-                response.Value = _mapper.Map<List<GetDeliveryQueryResponse>>(deliveries.Value); ;
+                response.Value = _mapper.Map<List<GetDeliveryQueryResponse>>(deliveries.Value);
                 response.Success = true;
                 response.InfoMessage = deliveries.InfoMessage;
             }

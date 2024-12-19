@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 namespace Meintasty.Application.Contract.Tax.Queries
 {
     [DataContract]
-    public class GetTaxQueryRequest : IRequest<GeneralResponse<GetTaxQueryResponse>>
+    public class GetTaxQueryRequest : IRequest<GeneralResponse<List<GetTaxQueryResponse>>>
     {
         [DataMember]
-        public int TaxId { get; set;}
+        public int? TaxId { get; set;}
     }
 }

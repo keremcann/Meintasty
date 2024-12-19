@@ -83,16 +83,8 @@ namespace Meintasty.Data
                 var result = await connection.db.QueryAsync<Int32>("del_RestaurantMenu", new
                 {
                     request.Id,
-                    request.RestaurantId,
-                    request.CategoryId,
-                    request.MenuName,
-                    request.MenuPic,
-                    request.MenuContent,
-                    request.MenuPrice,
-                    request.Currency,
                     request.DeleteUser,
-                    request.DeleteDate,
-                    request.IsActive
+                    request.DeleteDate
                 }, commandType: CommandType.StoredProcedure);
 
                 data.Value.Id = result.FirstOrDefault();
